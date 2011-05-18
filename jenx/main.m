@@ -3,7 +3,7 @@
 //  jenx
 //
 //  Created by Trent Kocurek on 5/18/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Urban Coding. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
