@@ -16,6 +16,10 @@ Jenx is written in MacRuby and has these features:
 
 TODO
 
+# Contact #
+
+Hop into the IRC channel: [#jenx](irc://freenode/jenx)
+
 # Copyright Info #
 
 Copyright (c) 2008 - 2011 Trent Kocurek ([@tkocurek](http://twitter.com/tkocurek)), released under the MIT license.
