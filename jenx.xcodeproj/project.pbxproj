@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		969DDFF7138397AD0022AAB3 /* build_failure.tif in Resources */ = {isa = PBXBuildFile; fileRef = 969DDFF6138397AD0022AAB3 /* build_failure.tif */; };
 		96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18313838DD50010CC22 /* Cocoa.framework */; };
 		96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18513838DD50010CC22 /* MacRuby.framework */; };
 		96CCF18D13838DD50010CC22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF18B13838DD50010CC22 /* InfoPlist.strings */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		969DDFF6138397AD0022AAB3 /* build_failure.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = build_failure.tif; sourceTree = "<group>"; };
 		96CCF17F13838DD50010CC22 /* jenx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jenx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CCF18313838DD50010CC22 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		96CCF18513838DD50010CC22 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = System/Library/Frameworks/MacRuby.framework; sourceTree = SDKROOT; };
@@ -95,6 +97,7 @@
 		96CCF19113838DD50010CC22 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				969DDFF6138397AD0022AAB3 /* build_failure.tif */,
 				96CCF1A813838E420010CC22 /* app.tif */,
 				96CCF19213838DD50010CC22 /* MainMenu.xib */,
 			);
@@ -178,6 +181,7 @@
 				96CCF19713838DD50010CC22 /* rb_main.rb in Resources */,
 				96CCF19913838DD50010CC22 /* AppDelegate.rb in Resources */,
 				96CCF1AB13838E420010CC22 /* app.tif in Resources */,
+				969DDFF7138397AD0022AAB3 /* build_failure.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

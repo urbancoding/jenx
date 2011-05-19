@@ -44,7 +44,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSMenuItem" id="226002728">
 						<reference key="NSMenu" ref="248325755"/>
-						<string key="NSTitle">Item 2</string>
+						<string key="NSTitle">Fetch Status</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<object class="NSCustomResource" key="NSOnImage">
