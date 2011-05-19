@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		969DDFF7138397AD0022AAB3 /* build_failure.tif in Resources */ = {isa = PBXBuildFile; fileRef = 969DDFF6138397AD0022AAB3 /* build_failure.tif */; };
+		96803B6C1384B19300D5DD90 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 96803B6B1384B19300D5DD90 /* refresh.png */; };
+		96803B6E1384B79F00D5DD90 /* projects.png in Resources */ = {isa = PBXBuildFile; fileRef = 96803B6D1384B79F00D5DD90 /* projects.png */; };
+		96803B8B1384CA3B00D5DD90 /* build_initiated.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */; };
+		96803B8E1384CB4000D5DD90 /* app.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8C1384CB4000D5DD90 /* app.tiff */; };
+		96803B8F1384CB4000D5DD90 /* build_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8D1384CB4000D5DD90 /* build_failure.tiff */; };
 		96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18313838DD50010CC22 /* Cocoa.framework */; };
 		96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18513838DD50010CC22 /* MacRuby.framework */; };
 		96CCF18D13838DD50010CC22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF18B13838DD50010CC22 /* InfoPlist.strings */; };
@@ -15,11 +19,15 @@
 		96CCF19413838DD50010CC22 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19213838DD50010CC22 /* MainMenu.xib */; };
 		96CCF19713838DD50010CC22 /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19613838DD50010CC22 /* rb_main.rb */; };
 		96CCF19913838DD50010CC22 /* AppDelegate.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19813838DD50010CC22 /* AppDelegate.rb */; };
-		96CCF1AB13838E420010CC22 /* app.tif in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF1A813838E420010CC22 /* app.tif */; };
+		96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EF2B9D1384E2E8002A755A /* build_success.tiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		969DDFF6138397AD0022AAB3 /* build_failure.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = build_failure.tif; sourceTree = "<group>"; };
+		96803B6B1384B19300D5DD90 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh.png; path = images/refresh.png; sourceTree = "<group>"; };
+		96803B6D1384B79F00D5DD90 /* projects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = projects.png; path = images/projects.png; sourceTree = "<group>"; };
+		96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_initiated.tiff; path = images/build_initiated.tiff; sourceTree = "<group>"; };
+		96803B8C1384CB4000D5DD90 /* app.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = app.tiff; path = images/app.tiff; sourceTree = "<group>"; };
+		96803B8D1384CB4000D5DD90 /* build_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_failure.tiff; path = images/build_failure.tiff; sourceTree = "<group>"; };
 		96CCF17F13838DD50010CC22 /* jenx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jenx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CCF18313838DD50010CC22 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		96CCF18513838DD50010CC22 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = System/Library/Frameworks/MacRuby.framework; sourceTree = SDKROOT; };
@@ -30,7 +38,7 @@
 		96CCF19313838DD50010CC22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		96CCF19613838DD50010CC22 /* rb_main.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = rb_main.rb; sourceTree = "<group>"; };
 		96CCF19813838DD50010CC22 /* AppDelegate.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = AppDelegate.rb; sourceTree = "<group>"; };
-		96CCF1A813838E420010CC22 /* app.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = app.tif; sourceTree = "<group>"; };
+		96EF2B9D1384E2E8002A755A /* build_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_success.tiff; path = images/build_success.tiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +54,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		96803B891384CA0600D5DD90 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				96803B8C1384CB4000D5DD90 /* app.tiff */,
+				96EF2B9D1384E2E8002A755A /* build_success.tiff */,
+				96803B8D1384CB4000D5DD90 /* build_failure.tiff */,
+				96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */,
+				96803B6D1384B79F00D5DD90 /* projects.png */,
+				96803B6B1384B19300D5DD90 /* refresh.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		96CCF17413838DD50010CC22 = {
 			isa = PBXGroup;
 			children = (
@@ -97,8 +118,7 @@
 		96CCF19113838DD50010CC22 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				969DDFF6138397AD0022AAB3 /* build_failure.tif */,
-				96CCF1A813838E420010CC22 /* app.tif */,
+				96803B891384CA0600D5DD90 /* Icons */,
 				96CCF19213838DD50010CC22 /* MainMenu.xib */,
 			);
 			name = Resources;
@@ -180,8 +200,12 @@
 				96CCF19413838DD50010CC22 /* MainMenu.xib in Resources */,
 				96CCF19713838DD50010CC22 /* rb_main.rb in Resources */,
 				96CCF19913838DD50010CC22 /* AppDelegate.rb in Resources */,
-				96CCF1AB13838E420010CC22 /* app.tif in Resources */,
-				969DDFF7138397AD0022AAB3 /* build_failure.tif in Resources */,
+				96803B6C1384B19300D5DD90 /* refresh.png in Resources */,
+				96803B6E1384B79F00D5DD90 /* projects.png in Resources */,
+				96803B8B1384CA3B00D5DD90 /* build_initiated.tiff in Resources */,
+				96803B8E1384CB4000D5DD90 /* app.tiff in Resources */,
+				96803B8F1384CB4000D5DD90 /* build_failure.tiff in Resources */,
+				96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +285,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "jenx/jenx-Prefix.pch";
 				INFOPLIST_FILE = "jenx/jenx-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jenx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -277,7 +301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "jenx/jenx-Prefix.pch";
 				INFOPLIST_FILE = "jenx/jenx-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jenx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
