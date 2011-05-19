@@ -9,6 +9,7 @@
 require 'rubygems'
 require 'json'
 require 'open-uri'
+require 'net/http'
 
 class AppDelegate
     JENKINS_URL = '' #enter your url here
@@ -24,8 +25,6 @@ class AppDelegate
     def awakeFromNib
         @initial_load = true
         
-        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true) 
-        
         @status_bar = NSStatusBar.systemStatusBar
         @jenx_item = @status_bar.statusItemWithLength(NSVariableStatusItemLength)
         @jenx_item.setHighlightMode(true)
@@ -37,7 +36,11 @@ class AppDelegate
         @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
         @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
 
-        fetch_current_build_status
+        if connection_can_be_established
+            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
+        else
+            handle_broken_connection
+        end
     end
     
     def fetch_current_build_status
@@ -87,6 +90,23 @@ class AppDelegate
                 end
             end
         end
+    end
+    
+    def handle_broken_connection
+        @jenx_item.setImage(@build_failure_icon)
+        @status_menu_item.setTitle("Connection to build server cannot be established.")
+        @status_menu_item.setToolTip("Connection to build server cannot be established.")
+    end
+    
+    def connection_can_be_established
+        url = JENKINS_URL
+        begin
+            result = Net::HTTP.get_response(URI.parse(url))
+        rescue
+            return false
+        end
+        
+        return !result.is_a?(Net::HTTPNotFound)
     end
     
     def get_current_status_icon_for(color)
