@@ -14,6 +14,8 @@ Jenx is written in MacRuby and has these features:
 
 # Updates, Changelog & Feedback
 
+TODO
+
 # Copyright Info #
 
 Copyright (c) 2008 - 2011 Trent Kocurek ([@tkocurek](http://twitter.com/tkocurek)), released under the MIT license.
