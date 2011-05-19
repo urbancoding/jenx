@@ -13,15 +13,18 @@ require 'open-uri'
 class AppDelegate
     JENKINS_URL = '' #enter your url here
     API_URL_EXTENSION = 'api/json'
-    DEFAULT_PROJECT = nil
+    DEFAULT_PROJECT = ''
     MAX_PROJECTS_TO_SHOW = 10
     STARTING_PROJECT_MENU_INDEX = 5
+    REFRESH_TIME_INTERVAL = 10.0 #seconds
     
     attr_accessor :menu
     attr_accessor :status_menu_item
     
     def awakeFromNib
         @initial_load = true
+        
+        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true) 
         
         @status_bar = NSStatusBar.systemStatusBar
         @jenx_item = @status_bar.statusItemWithLength(NSVariableStatusItemLength)
