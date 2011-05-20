@@ -7,9 +7,9 @@
 #
 
 #global
-JENX_BUILD_SERVER_URL = 'http://10.0.0.44/' #enter your url here
+JENX_BUILD_SERVER_URL = '' #enter your url here
 JENX_API_URI = 'api/json'
-JENX_DEFAULT_PROJECT = 'DO_Trunk'
+JENX_DEFAULT_PROJECT = ''
 JENX_MAX_PROJECTS_TO_SHOW = 10
 JENX_STARTING_PROJECT_MENU_INDEX = 5
 JENX_REFRESH_TIME_INTERVAL = 10.0 #seconds
