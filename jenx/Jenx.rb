@@ -11,13 +11,7 @@ require 'json'
 require 'open-uri'
 require 'net/http'
 
-class AppDelegate
-    JENKINS_URL = '' #enter your url here
-    API_URL_EXTENSION = 'api/json'
-    DEFAULT_PROJECT = ''
-    MAX_PROJECTS_TO_SHOW = 10
-    STARTING_PROJECT_MENU_INDEX = 5
-    REFRESH_TIME_INTERVAL = 10.0 #seconds
+class Jenx
     
     attr_accessor :menu
     attr_accessor :status_menu_item
@@ -37,19 +31,19 @@ class AppDelegate
         @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
 
         if connection_can_be_established
-            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
+            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(JENX_REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
         else
             handle_broken_connection
         end
     end
     
     def fetch_current_build_status
-        @all_projects = JSON.parse(open(JENKINS_URL + API_URL_EXTENSION).string)
+        @all_projects = JSON.parse(open(JENX_BUILD_SERVER_URL + JENX_API_URI).string)
         
         status_color = ""
-        if !DEFAULT_PROJECT.nil?
+        if !JENX_DEFAULT_PROJECT.nil?
             @all_projects['jobs'].each do |j| 
-                status_color = j['color'] if j['name'] == DEFAULT_PROJECT
+                status_color = j['color'] if j['name'] == JENX_DEFAULT_PROJECT
             end
         end
         
@@ -62,7 +56,7 @@ class AppDelegate
     def load_projects
         if @initial_load
             @all_projects['jobs'].each_with_index do |project, index|
-                if index < MAX_PROJECTS_TO_SHOW
+                if index < JENX_MAX_PROJECTS_TO_SHOW
                     project_menu_item = NSMenuItem.alloc.init
                     project_menu_item.setTitle(" " + project['name'])
                     project_menu_item.setToolTip(project['url'])
@@ -70,22 +64,22 @@ class AppDelegate
                     project_menu_item.setIndentationLevel(1)
                     project_menu_item.setImage(get_current_status_icon_for(project['color']))
                     project_menu_item.setAction("open_web_interface_for:")
-                    @jenx_item.menu.insertItem(project_menu_item, atIndex:index + STARTING_PROJECT_MENU_INDEX)
+                    @jenx_item.menu.insertItem(project_menu_item, atIndex:index + JENX_STARTING_PROJECT_MENU_INDEX)
                 end
             end
             
             view_all_menu_item = NSMenuItem.alloc.init
             view_all_menu_item.setTitle("View all projects..")
-            view_all_menu_item.setToolTip(JENKINS_URL)
+            view_all_menu_item.setToolTip(JENX_BUILD_SERVER_URL)
             view_all_menu_item.setIndentationLevel(1)
             view_all_menu_item.setAction("open_web_interface_for:")
-            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:MAX_PROJECTS_TO_SHOW + STARTING_PROJECT_MENU_INDEX)
+            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:JENX_MAX_PROJECTS_TO_SHOW + JENX_STARTING_PROJECT_MENU_INDEX)
             
             @initial_load = false
         else
             @all_projects['jobs'].each_with_index do |project, index| 
-                if index < MAX_PROJECTS_TO_SHOW
-                    project_menu_item = @jenx_item.menu.itemAtIndex(index + STARTING_PROJECT_MENU_INDEX)
+                if index < JENX_MAX_PROJECTS_TO_SHOW
+                    project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
                     project_menu_item.setImage(get_current_status_icon_for(project['color']))
                 end
             end
@@ -99,7 +93,7 @@ class AppDelegate
     end
     
     def connection_can_be_established
-        url = JENKINS_URL
+        url = JENX_BUILD_SERVER_URL
         begin
             result = Net::HTTP.get_response(URI.parse(url))
         rescue
@@ -121,7 +115,7 @@ class AppDelegate
     end
     
     def get_current_status_for(color)
-        if DEFAULT_PROJECT.nil?
+        if JENX_DEFAULT_PROJECT.nil?
             return "No default project set"
         end
         
@@ -129,11 +123,11 @@ class AppDelegate
             when ""
                 return "Could not retrieve status"
             when "red"
-                return DEFAULT_PROJECT + ": Broken"
+                return JENX_DEFAULT_PROJECT + ": Broken"
             when "blue_anime"
-                return DEFAULT_PROJECT + ": Building"
+                return JENX_DEFAULT_PROJECT + ": Building"
             else
-                return DEFAULT_PROJECT + ": Stable"
+                return JENX_DEFAULT_PROJECT + ": Stable"
         end
     end
     
@@ -146,6 +140,11 @@ class AppDelegate
         project_url = NSURL.alloc.initWithString(sender.toolTip)
         workspace = NSWorkspace.sharedWorkspace
         workspace.openURL(project_url)
+    end
+    
+    def show_preferences_window(sender)
+        NSApplication.sharedApplication.activateIgnoringOtherApps(true)
+        PreferencesController.sharedController.showWindow(sender)
     end
 end
 
