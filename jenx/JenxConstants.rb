@@ -7,13 +7,22 @@
 #
 
 #global
-JENX_BUILD_SERVER_URL = '' #enter your url here
-JENX_API_URI = 'api/json'
-JENX_DEFAULT_PROJECT = ''
-JENX_MAX_PROJECTS_TO_SHOW = 10
+JENX_API_URI = "/api/json"
 JENX_STARTING_PROJECT_MENU_INDEX = 5
+
+JENX_BUILD_SERVER_URL = "http://10.0.0.44/"
+JENX_DEFAULT_PROJECT = "DO_Trunk"
+JENX_MAX_PROJECTS_TO_SHOW = 10
 JENX_REFRESH_TIME_INTERVAL = 10.0 #seconds
 
 #preferences
+PREFERENCES_BUILD_SERVER_URL = "build_server_url"
+PREFERENCES_DEFAULT_PROJECT = "default_project"
+PREFERENCES_MAX_PROJECTS_TO_SHOW = "max_project_to_show"
+PREFERENCES_REFRESH_TIME_INTERVAL = "refresh_time_interval"
 PREFERENCES_SELECTION = "preferences_selection"
 PREFERENCES_TOOLBAR_ITEM_GENERAL = "preferences_toolbar_item_general"
+PREFERENCES_ENABLE_GROWL = "enable_growl"
+
+#notifications
+NOTIFICATION_ADDED_SERVER_URL = "build_server_url_added"

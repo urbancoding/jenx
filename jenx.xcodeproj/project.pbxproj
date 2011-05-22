@@ -24,6 +24,8 @@
 		96CCF19713838DD50010CC22 /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19613838DD50010CC22 /* rb_main.rb */; };
 		96CCF19913838DD50010CC22 /* Jenx.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19813838DD50010CC22 /* Jenx.rb */; };
 		96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EF2B9D1384E2E8002A755A /* build_success.tiff */; };
+		96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0082138642C4001EB442 /* JenxPreferences.rb */; };
+		96FB0085138647D6001EB442 /* JenxProject.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0084138647D6001EB442 /* JenxProject.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		96CCF19613838DD50010CC22 /* rb_main.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = rb_main.rb; sourceTree = "<group>"; };
 		96CCF19813838DD50010CC22 /* Jenx.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = Jenx.rb; sourceTree = "<group>"; };
 		96EF2B9D1384E2E8002A755A /* build_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_success.tiff; path = images/build_success.tiff; sourceTree = "<group>"; };
+		96FB0082138642C4001EB442 /* JenxPreferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxPreferences.rb; sourceTree = "<group>"; };
+		96FB0084138647D6001EB442 /* JenxProject.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxProject.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,9 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				96CCF19813838DD50010CC22 /* Jenx.rb */,
-				96B6FD0713862428009C1021 /* JenxConstants.rb */,
 				96B6FD0A138626F3009C1021 /* Assets */,
 				96B6FD09138626E2009C1021 /* Controllers */,
+				96FB008013864264001EB442 /* Models */,
 				96CCF19113838DD50010CC22 /* Views */,
 				96CCF19513838DD50010CC22 /* Other Sources */,
 				96CCF18913838DD50010CC22 /* Supporting Files */,
@@ -158,6 +162,16 @@
 				96CCF19613838DD50010CC22 /* rb_main.rb */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		96FB008013864264001EB442 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				96B6FD0713862428009C1021 /* JenxConstants.rb */,
+				96FB0082138642C4001EB442 /* JenxPreferences.rb */,
+				96FB0084138647D6001EB442 /* JenxProject.rb */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +252,8 @@
 				96B6FD0413860F95009C1021 /* PreferencesGeneralViewController.rb in Resources */,
 				96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */,
 				96B6FD0813862428009C1021 /* JenxConstants.rb in Resources */,
+				96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */,
+				96FB0085138647D6001EB442 /* JenxProject.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

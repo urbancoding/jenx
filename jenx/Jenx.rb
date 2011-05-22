@@ -12,9 +12,7 @@ require 'open-uri'
 require 'net/http'
 
 class Jenx
-    
-    attr_accessor :menu
-    attr_accessor :status_menu_item
+    attr_accessor :menu, :status_menu_item, :refresh_menu_item
     
     def awakeFromNib
         @initial_load = true
@@ -24,33 +22,52 @@ class Jenx
         @jenx_item.setHighlightMode(true)
         @jenx_item.setMenu(@menu)
         
+        JenxPreferences::setup_defaults
+        
+        @preferences = JenxPreferences.sharedInstance
+        
+        initialize_menu_ui_items
+        
+        register_observers
+        
+        connect_to_server
+    end
+    
+    def initialize_menu_ui_items
         @app_icon = NSImage.imageNamed('app.tiff')
         
         @build_success_icon = NSImage.imageNamed('build_success.tiff')
         @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
         @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
-
-        if connection_can_be_established
-            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(JENX_REFRESH_TIME_INTERVAL, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
+    end
+    
+    def connect_to_server
+        if !@preferences.build_server_url.empty?
+            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(@preferences.refresh_time, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
+            refresh_status(nil)
         else
             handle_broken_connection
         end
     end
-    
+        
     def fetch_current_build_status
-        @all_projects = JSON.parse(open(JENX_BUILD_SERVER_URL + JENX_API_URI).string)
-        
-        status_color = ""
-        if !JENX_DEFAULT_PROJECT.nil?
-            @all_projects['jobs'].each do |j| 
-                status_color = j['color'] if j['name'] == JENX_DEFAULT_PROJECT
+        if connection_can_be_established
+            @all_projects = JSON.parse(open(JENX_BUILD_SERVER_URL + JENX_API_URI).string)
+            
+            status_color = ""
+            if !JENX_DEFAULT_PROJECT.nil?
+                @all_projects['jobs'].each do |j| 
+                    status_color = j['color'] if j['name'] == JENX_DEFAULT_PROJECT
+                end
             end
+            
+            @status_menu_item.setTitle(get_current_status_for(status_color))
+            @jenx_item.setImage(@app_icon)
+            
+            load_projects
+        else
+            handle_broken_connection
         end
-        
-        @status_menu_item.setTitle(get_current_status_for(status_color))
-        @jenx_item.setImage(@app_icon)
-        
-        load_projects
     end
     
     def load_projects
@@ -87,7 +104,13 @@ class Jenx
     end
     
     def handle_broken_connection
+        @refresh_timer.invalidate if @refresh_timer
+        
         @jenx_item.setImage(@build_failure_icon)
+        
+        @refresh_menu_item.setEnabled(false)
+        @refresh_menu_item.setAction(nil)
+        
         @status_menu_item.setTitle("Connection to build server cannot be established.")
         @status_menu_item.setToolTip("Connection to build server cannot be established.")
     end
@@ -146,5 +169,20 @@ class Jenx
         NSApplication.sharedApplication.activateIgnoringOtherApps(true)
         PreferencesController.sharedController.showWindow(sender)
     end
+    
+    def finished_adding_server_url(sender)
+        connect_to_server
+    end
+    
+    private
+        def register_observers
+            notification_center = NSNotificationCenter.defaultCenter
+            notification_center.addObserver(
+               self,
+               selector:"finished_adding_server_url:",
+               name:NOTIFICATION_ADDED_SERVER_URL,
+               object:nil
+            )
+        end
 end
 
