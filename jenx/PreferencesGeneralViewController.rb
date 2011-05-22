@@ -30,12 +30,43 @@ class PreferencesGeneralViewController <  NSViewController
     
     def loadView
         super
-        @project_list.target = self
-        @server_url.stringValue = JenxPreferences.sharedInstance.build_server_url
+        @preferences = JenxPreferences.sharedInstance
+        @server_url.stringValue = @preferences.build_server_url
+        
+        if JenxPreferences.sharedInstance.build_server_url
+            load_project_combo_box
+        end
+        
+        @refresh_time.intValue = @preferences.refresh_time
+        @num_menu_projects.intValue = @preferences.num_menu_projects
     end
     
-    def save_build_server_url(sender)
-        JenxPreferences.sharedInstance.build_server_url = server_url.stringValue
+    def load_projects(sender)
+        load_project_combo_box
+    end
+    
+    def load_project_combo_box
+        @all_projects = JSON.parse(open(server_url.stringValue + JENX_API_URI).string)
+        
+        @all_projects['jobs'].each do |project|
+            @project_list.addItemWithObjectValue(project['name'])
+        end
+        
+        if !@preferences.default_project
+            @project_list.selectItemWithObjectValue(0)
+        else
+            @project_list.selectItemWithObjectValue(@preferences.default_project)
+        end    
+    end
+    
+    def save_preferences(sender)
+        @preferences.build_server_url = server_url.stringValue
+        @preferences.default_project = @project_list.objectValueOfSelectedItem
+        @preferences.refresh_time = refresh_time.intValue
+        @preferences.num_menu_projects = num_menu_projects.intValue
+        
         NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_ADDED_SERVER_URL, object:self)
+        
+        self.view.window.close
     end
 end

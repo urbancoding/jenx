@@ -52,12 +52,12 @@ class Jenx
         
     def fetch_current_build_status
         if connection_can_be_established
-            @all_projects = JSON.parse(open(JENX_BUILD_SERVER_URL + JENX_API_URI).string)
+            @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
             
             status_color = ""
-            if !JENX_DEFAULT_PROJECT.nil?
+            if !@preferences.build_server_url.empty?
                 @all_projects['jobs'].each do |j| 
-                    status_color = j['color'] if j['name'] == JENX_DEFAULT_PROJECT
+                    status_color = j['color'] if j['name'] == @preferences.default_project
                 end
             end
             
@@ -73,7 +73,7 @@ class Jenx
     def load_projects
         if @initial_load
             @all_projects['jobs'].each_with_index do |project, index|
-                if index < JENX_MAX_PROJECTS_TO_SHOW
+                if index < @preferences.num_menu_projects
                     project_menu_item = NSMenuItem.alloc.init
                     project_menu_item.setTitle(" " + project['name'])
                     project_menu_item.setToolTip(project['url'])
@@ -87,15 +87,15 @@ class Jenx
             
             view_all_menu_item = NSMenuItem.alloc.init
             view_all_menu_item.setTitle("View all projects..")
-            view_all_menu_item.setToolTip(JENX_BUILD_SERVER_URL)
+            view_all_menu_item.setToolTip(@preferences.build_server_url)
             view_all_menu_item.setIndentationLevel(1)
             view_all_menu_item.setAction("open_web_interface_for:")
-            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:JENX_MAX_PROJECTS_TO_SHOW + JENX_STARTING_PROJECT_MENU_INDEX)
+            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:@preferences.num_menu_projects + JENX_STARTING_PROJECT_MENU_INDEX)
             
             @initial_load = false
         else
             @all_projects['jobs'].each_with_index do |project, index| 
-                if index < JENX_MAX_PROJECTS_TO_SHOW
+                if index < @preferences.num_menu_projects
                     project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
                     project_menu_item.setImage(get_current_status_icon_for(project['color']))
                 end
@@ -116,7 +116,7 @@ class Jenx
     end
     
     def connection_can_be_established
-        url = JENX_BUILD_SERVER_URL
+        url = @preferences.build_server_url
         begin
             result = Net::HTTP.get_response(URI.parse(url))
         rescue
@@ -138,7 +138,7 @@ class Jenx
     end
     
     def get_current_status_for(color)
-        if JENX_DEFAULT_PROJECT.nil?
+        if @preferences.default_project.nil?
             return "No default project set"
         end
         
@@ -146,11 +146,11 @@ class Jenx
             when ""
                 return "Could not retrieve status"
             when "red"
-                return JENX_DEFAULT_PROJECT + ": Broken"
+                return @preferences.default_project + ": Broken"
             when "blue_anime"
-                return JENX_DEFAULT_PROJECT + ": Building"
+                return @preferences.default_project + ": Building"
             else
-                return JENX_DEFAULT_PROJECT + ": Stable"
+                return @preferences.default_project + ": Stable"
         end
     end
     

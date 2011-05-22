@@ -68,10 +68,7 @@ class JenxPreferences
         def setup_defaults
             NSUserDefaults.standardUserDefaults.registerDefaults(
                 NSDictionary.dictionaryWithObjectsAndKeys(
-                   false, PREFERENCES_ENABLE_GROWL,
                    PREFERENCES_TOOLBAR_ITEM_GENERAL, PREFERENCES_SELECTION,
-                   5, PREFERENCES_MAX_PROJECTS_TO_SHOW,
-                   10, PREFERENCES_REFRESH_TIME_INTERVAL,
                    nil))
         end
     end
