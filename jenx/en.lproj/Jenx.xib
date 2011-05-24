@@ -172,14 +172,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">refresh_status:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="226002728"/>
-					</object>
-					<int key="connectionID">575</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">show_preferences_window:</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="439615643"/>
@@ -187,12 +179,12 @@
 					<int key="connectionID">580</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">refresh_menu_item</string>
+					<object class="IBActionConnection" key="connection">
+						<string key="label">ensure_connection:</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="226002728"/>
 					</object>
-					<int key="connectionID">584</int>
+					<int key="connectionID">590</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -342,7 +334,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">584</int>
+			<int key="maxID">590</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -354,8 +346,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ensure_connection:</string>
 							<string>open_web_interface_for:</string>
-							<string>refresh_status:</string>
 							<string>show_preferences_window:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -369,18 +361,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>ensure_connection:</string>
 							<string>open_web_interface_for:</string>
-							<string>refresh_status:</string>
 							<string>show_preferences_window:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">open_web_interface_for:</string>
+								<string key="name">ensure_connection:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">refresh_status:</string>
+								<string key="name">open_web_interface_for:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -394,12 +386,10 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>menu</string>
-							<string>refresh_menu_item</string>
 							<string>status_menu_item</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -409,17 +399,12 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>menu</string>
-							<string>refresh_menu_item</string>
 							<string>status_menu_item</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">menu</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">refresh_menu_item</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96801662138A3BB800050ED2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		9680166F138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */; };
+		96801689138B26F500050ED2 /* JenxConnectionManager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96801688138B26F500050ED2 /* JenxConnectionManager.rb */; };
+		9680168C138B6A2800050ED2 /* JenxConnection.rb in Resources */ = {isa = PBXBuildFile; fileRef = 9680168B138B6A2800050ED2 /* JenxConnection.rb */; };
 		96803B6C1384B19300D5DD90 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 96803B6B1384B19300D5DD90 /* refresh.png */; };
 		96803B6E1384B79F00D5DD90 /* projects.png in Resources */ = {isa = PBXBuildFile; fileRef = 96803B6D1384B79F00D5DD90 /* projects.png */; };
 		96803B8B1384CA3B00D5DD90 /* build_initiated.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */; };
@@ -23,12 +27,16 @@
 		96CCF19413838DD50010CC22 /* Jenx.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19213838DD50010CC22 /* Jenx.xib */; };
 		96CCF19713838DD50010CC22 /* rb_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19613838DD50010CC22 /* rb_main.rb */; };
 		96CCF19913838DD50010CC22 /* Jenx.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19813838DD50010CC22 /* Jenx.rb */; };
+		96EB2829138A04DF00D02D6B /* connecting.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EB2828138A04DF00D02D6B /* connecting.tiff */; };
 		96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EF2B9D1384E2E8002A755A /* build_success.tiff */; };
 		96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0082138642C4001EB442 /* JenxPreferences.rb */; };
-		96FB0085138647D6001EB442 /* JenxProject.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0084138647D6001EB442 /* JenxProject.rb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96801661138A3BB800050ED2 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Library/Frameworks/Growl.framework; sourceTree = SDKROOT; };
+		9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		96801688138B26F500050ED2 /* JenxConnectionManager.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConnectionManager.rb; sourceTree = "<group>"; };
+		9680168B138B6A2800050ED2 /* JenxConnection.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConnection.rb; sourceTree = "<group>"; };
 		96803B6B1384B19300D5DD90 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh.png; path = images/refresh.png; sourceTree = "<group>"; };
 		96803B6D1384B79F00D5DD90 /* projects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = projects.png; path = images/projects.png; sourceTree = "<group>"; };
 		96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_initiated.tiff; path = images/build_initiated.tiff; sourceTree = "<group>"; };
@@ -48,9 +56,9 @@
 		96CCF19313838DD50010CC22 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Jenx.xib; sourceTree = "<group>"; };
 		96CCF19613838DD50010CC22 /* rb_main.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = rb_main.rb; sourceTree = "<group>"; };
 		96CCF19813838DD50010CC22 /* Jenx.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = Jenx.rb; sourceTree = "<group>"; };
+		96EB2828138A04DF00D02D6B /* connecting.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = connecting.tiff; path = images/connecting.tiff; sourceTree = "<group>"; };
 		96EF2B9D1384E2E8002A755A /* build_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_success.tiff; path = images/build_success.tiff; sourceTree = "<group>"; };
 		96FB0082138642C4001EB442 /* JenxPreferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxPreferences.rb; sourceTree = "<group>"; };
-		96FB0084138647D6001EB442 /* JenxProject.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxProject.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96801662138A3BB800050ED2 /* Growl.framework in Frameworks */,
 				96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */,
 				96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */,
 			);
@@ -69,6 +78,7 @@
 		96803B891384CA0600D5DD90 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				96EB2828138A04DF00D02D6B /* connecting.tiff */,
 				96803B8C1384CB4000D5DD90 /* app.tiff */,
 				96EF2B9D1384E2E8002A755A /* build_success.tiff */,
 				96803B8D1384CB4000D5DD90 /* build_failure.tiff */,
@@ -91,6 +101,7 @@
 		96B6FD0A138626F3009C1021 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */,
 				96803B891384CA0600D5DD90 /* Icons */,
 			);
 			name = Assets;
@@ -116,6 +127,7 @@
 		96CCF18213838DD50010CC22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96801661138A3BB800050ED2 /* Growl.framework */,
 				96CCF18313838DD50010CC22 /* Cocoa.framework */,
 				96CCF18513838DD50010CC22 /* MacRuby.framework */,
 			);
@@ -169,7 +181,8 @@
 			children = (
 				96B6FD0713862428009C1021 /* JenxConstants.rb */,
 				96FB0082138642C4001EB442 /* JenxPreferences.rb */,
-				96FB0084138647D6001EB442 /* JenxProject.rb */,
+				9680168B138B6A2800050ED2 /* JenxConnection.rb */,
+				96801688138B26F500050ED2 /* JenxConnectionManager.rb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -253,7 +266,10 @@
 				96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */,
 				96B6FD0813862428009C1021 /* JenxConstants.rb in Resources */,
 				96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */,
-				96FB0085138647D6001EB442 /* JenxProject.rb in Resources */,
+				96EB2829138A04DF00D02D6B /* connecting.tiff in Resources */,
+				9680166F138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict in Resources */,
+				96801689138B26F500050ED2 /* JenxConnectionManager.rb in Resources */,
+				9680168C138B6A2800050ED2 /* JenxConnection.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

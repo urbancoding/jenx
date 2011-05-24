@@ -15,7 +15,6 @@ class JenxPreferences
 
     def init
         super
-        defaults = NSUserDefaults.standardUserDefaults
         self
     end
 

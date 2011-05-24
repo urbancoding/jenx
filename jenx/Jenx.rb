@@ -3,7 +3,7 @@
 #  jenx
 #
 #  Created by Trent Kocurek on 5/18/11.
-#  Copyright 2011 Urban Coding. Released under the MIT license..
+#  Copyright 2011 Urban Coding. Released under the MIT license.
 #
 
 require 'rubygems'
@@ -12,7 +12,7 @@ require 'open-uri'
 require 'net/http'
 
 class Jenx
-    attr_accessor :menu, :status_menu_item, :refresh_menu_item
+    attr_accessor :menu, :status_menu_item
     
     def awakeFromNib
         @initial_load = true
@@ -29,44 +29,44 @@ class Jenx
         initialize_menu_ui_items
         
         register_observers
-        
-        connect_to_server
     end
     
-    def initialize_menu_ui_items
-        @app_icon = NSImage.imageNamed('app.tiff')
-        
-        @build_success_icon = NSImage.imageNamed('build_success.tiff')
-        @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
-        @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
-    end
-    
-    def connect_to_server
-        if !@preferences.build_server_url.empty?
-            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(@preferences.refresh_time, target:self, selector:"refresh_status:", userInfo:nil, repeats:true)
-            refresh_status(nil)
+    def ensure_connection(sender)
+        if @initial_load
+            @status_menu_item.setTitle("Refreshing...")
         else
-            handle_broken_connection
+            @status_menu_item.setTitle("Connecting...")
+        end
+        
+        if JenxConnection.new(@preferences.build_server_url).is_connected?
+            get_builds
+        else
+            handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
         end
     end
-        
+    
+    def get_builds
+        if @refresh_timer.nil? || !@refresh_timer.isValid
+            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(@preferences.refresh_time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
+        end
+        fetch_current_build_status
+    end
+    
     def fetch_current_build_status
-        if connection_can_be_established
+        begin
             @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
             
             status_color = ""
-            if !@preferences.build_server_url.empty?
-                @all_projects['jobs'].each do |j| 
-                    status_color = j['color'] if j['name'] == @preferences.default_project
-                end
+            @all_projects['jobs'].each do |project| 
+                status_color = project['color'] if project['name'] == @preferences.default_project
             end
             
             @status_menu_item.setTitle(get_current_status_for(status_color))
             @jenx_item.setImage(@app_icon)
             
             load_projects
-        else
-            handle_broken_connection
+        rescue Exception => e
+            NSLog(e.message)
         end
     end
     
@@ -103,62 +103,20 @@ class Jenx
         end
     end
     
-    def handle_broken_connection
+    def handle_broken_connection(error_type)
         @refresh_timer.invalidate if @refresh_timer
-        
         @jenx_item.setImage(@build_failure_icon)
         
-        @refresh_menu_item.setEnabled(false)
-        @refresh_menu_item.setAction(nil)
-        
-        @status_menu_item.setTitle("Connection to build server cannot be established.")
-        @status_menu_item.setToolTip("Connection to build server cannot be established.")
-    end
-    
-    def connection_can_be_established
-        url = @preferences.build_server_url
-        begin
-            result = Net::HTTP.get_response(URI.parse(url))
-        rescue
-            return false
-        end
-        
-        return !result.is_a?(Net::HTTPNotFound)
-    end
-    
-    def get_current_status_icon_for(color)
-        case color
-            when "red"
-                return @build_failure_icon
-            when "blue_anime"
-                return @build_initiated_icon
-            else
-                return @build_success_icon
-        end
-    end
-    
-    def get_current_status_for(color)
-        if @preferences.default_project.nil?
-            return "No default project set"
-        end
-        
-        case color
-            when ""
-                return "Could not retrieve status"
-            when "red"
-                return @preferences.default_project + ": Broken"
-            when "blue_anime"
-                return @preferences.default_project + ": Building"
-            else
-                return @preferences.default_project + ": Stable"
+        if error_type == ERROR_NO_INTERNET_CONNECTION
+            @status_menu_item.setTitle("No internet connection...")
+            @status_menu_item.setToolTip("No internet connection...")
+        else
+            @status_menu_item.setTitle("Connection to build server cannot be established...")
+            @status_menu_item.setToolTip("Connection to build server cannot be established...")
         end
     end
     
     #actions
-    def refresh_status(sender)
-        fetch_current_build_status
-    end
-    
     def open_web_interface_for(sender)
         project_url = NSURL.alloc.initWithString(sender.toolTip)
         workspace = NSWorkspace.sharedWorkspace
@@ -170,19 +128,60 @@ class Jenx
         PreferencesController.sharedController.showWindow(sender)
     end
     
-    def finished_adding_server_url(sender)
-        connect_to_server
-    end
-    
     private
+    
+        def initialize_menu_ui_items
+            @app_icon = NSImage.imageNamed('app.tiff')
+            @connecting_icon = NSImage.imageNamed('connecting.tiff')
+            
+            @build_success_icon = NSImage.imageNamed('build_success.tiff')
+            @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
+            @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
+        end
+    
         def register_observers
             notification_center = NSNotificationCenter.defaultCenter
             notification_center.addObserver(
                self,
-               selector:"finished_adding_server_url:",
+               selector:"ensure_connection:",
                name:NOTIFICATION_ADDED_SERVER_URL,
                object:nil
             )
+            
+            notification_center.addObserver(
+               self,
+               selector:"ensure_connection:",
+               name:NSApplicationDidFinishLaunchingNotification,
+               object:nil
+            )
+        end
+    
+        def get_current_status_icon_for(color)
+            case color
+                when "red"
+                    return @build_failure_icon
+                when "blue_anime"
+                    return @build_initiated_icon
+                else
+                    return @build_success_icon
+            end
+        end
+        
+        def get_current_status_for(color)
+            if @preferences.default_project.empty?
+                return "No default project set"
+            end
+            
+            case color
+                when ""
+                return "Could not retrieve status"
+                when "red"
+                return @preferences.default_project + ": Broken"
+                when "blue_anime"
+                return @preferences.default_project + ": Building"
+                else
+                return @preferences.default_project + ": Stable"
+            end
         end
 end
 
