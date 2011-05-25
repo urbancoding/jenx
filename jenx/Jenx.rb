@@ -6,6 +6,7 @@
 #  Copyright 2011 Urban Coding. Released under the MIT license.
 #
 
+framework 'Growl'
 require 'rubygems'
 require 'json'
 require 'open-uri'
@@ -29,15 +30,18 @@ class Jenx
         initialize_menu_ui_items
         
         register_observers
+        
+        register_growl
     end
     
     def update_for_preferences(sender)
         @initial_load = true
-        ensure_connection(nil)
         
         @refresh_timer.invalidate if @refresh_timer
         NSLog("Preferences saved, recreating timer...")
-        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(@preferences.refresh_time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
+        create_timer
+        
+        ensure_connection(nil)
     end 
     
     def ensure_connection(sender)
@@ -50,8 +54,7 @@ class Jenx
     def get_builds
         NSLog("Get builds...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
-            NSLog("Create timer...")
-            @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(@preferences.refresh_time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
+            create_timer
         end
         fetch_current_build_status
     end
@@ -77,11 +80,12 @@ class Jenx
     
     def load_projects
         if @initial_load
-            NSLog("Initial load of project menu items...")
+            project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
+            NSLog("Initial load of project menu items with " + project_menu_count.to_s + " projects...")
             @all_projects['jobs'].each_with_index do |project, index|
-                if index < @preferences.num_menu_projects
+                if index < project_menu_count
                     project_menu_item = NSMenuItem.alloc.init
-                    project_menu_item.setTitle((index+1).to_s + " " + project['name'])
+                    project_menu_item.setTitle(" " + project['name'])
                     project_menu_item.setToolTip(project['url'])
                     project_menu_item.setEnabled(true)
                     project_menu_item.setIndentationLevel(1)
@@ -98,7 +102,7 @@ class Jenx
             view_all_menu_item.setIndentationLevel(1)
             view_all_menu_item.setAction("open_web_interface_for:")
             view_all_menu_item.setTag(@preferences.num_menu_projects + 1)
-            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:@preferences.num_menu_projects + JENX_STARTING_PROJECT_MENU_INDEX)
+            @jenx_item.menu.insertItem(view_all_menu_item, atIndex:project_menu_count + JENX_STARTING_PROJECT_MENU_INDEX)
             
             @initial_load = false
         else
@@ -120,12 +124,26 @@ class Jenx
         if error_type == ERROR_NO_INTERNET_CONNECTION
             @status_item.setTitle("No internet connection...")
             @status_item.setToolTip("No internet connection...")
+            growl("Connection Error", "No internet connection...")
         else
             @status_item.setTitle("Connection to build server cannot be established...")
             @status_item.setToolTip("Connection to build server cannot be established...")
+            growl("Connection Error", "Connection to build server cannot be established...")
         end
         
         clear_projects_from_menu
+    end
+    
+    def clear_projects_from_menu
+        for i in 1..(@preferences.num_menu_projects + 1)
+            @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i))
+        end
+    end
+    
+    def create_timer
+        NSLog("Create timer with refresh_time of: " + @preferences.refresh_time.to_s + "...")
+        time = (@preferences.refresh_time == 0 || @preferences.refresh_time.empty?) ? 5 : @preferences.refresh_time
+        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
     end
     
     #actions
@@ -141,10 +159,27 @@ class Jenx
         PreferencesController.sharedController.showWindow(sender)
     end
     
-    def clear_projects_from_menu
-        for i in 1..(@preferences.num_menu_projects + 1)
-            @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i))
-        end
+    # Growl delegate
+    def applicationNameForGrowl
+        "Jenx"
+    end
+    
+    def growlNotificationWasClicked(clickContext)
+    end
+    
+    def growlNotificationTimedOut(clickContext)
+    end
+    
+    def growl(title, message)
+        GrowlApplicationBridge.notifyWithTitle(
+           title,
+           description: message,
+           notificationName: "new_messages",
+           iconData: nil,
+           priority: 0,
+           isSticky: false,
+           clickContext: "title test"
+       )
     end
     
     private
@@ -169,10 +204,21 @@ class Jenx
             
             notification_center.addObserver(
                self,
+               selector:"update_for_preferences:",
+               name:NSWindowWillCloseNotification,
+               object:nil
+            )
+            
+            notification_center.addObserver(
+               self,
                selector:"ensure_connection:",
                name:NSApplicationDidFinishLaunchingNotification,
                object:nil
             )
+        end
+    
+        def register_growl
+            GrowlApplicationBridge.setGrowlDelegate(self)
         end
     
         def get_current_status_icon_for(color)
@@ -193,13 +239,13 @@ class Jenx
             
             case color
                 when ""
-                return "Could not retrieve status"
+                    return "Could not retrieve status"
                 when "red"
-                return @preferences.default_project + ": Broken"
+                    return @preferences.default_project + ": Broken"
                 when "blue_anime"
-                return @preferences.default_project + ": Building"
+                    return @preferences.default_project + ": Building"
                 else
-                return @preferences.default_project + ": Stable"
+                    return @preferences.default_project + ": Stable"
             end
         end
 end
