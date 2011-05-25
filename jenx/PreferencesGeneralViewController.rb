@@ -65,7 +65,7 @@ class PreferencesGeneralViewController <  NSViewController
         @preferences.refresh_time = refresh_time.intValue
         @preferences.num_menu_projects = num_menu_projects.intValue
         
-        NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_ADDED_SERVER_URL, object:self)
+        NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_PREFERENCES_UPDATED, object:self)
         
         self.view.window.close
     end

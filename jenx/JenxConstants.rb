@@ -22,7 +22,7 @@ PREFERENCES_TOOLBAR_ITEM_GENERAL = "preferences_toolbar_item_general"
 PREFERENCES_ENABLE_GROWL = "enable_growl"
 
 #notifications
-NOTIFICATION_ADDED_SERVER_URL = "build_server_url_added"
+NOTIFICATION_PREFERENCES_UPDATED = "preferences_updated"
 
 #errors
 ERROR_NO_INTERNET_CONNECTION = "no_internet_connection"
