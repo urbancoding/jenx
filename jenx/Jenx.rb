@@ -74,7 +74,7 @@ class Jenx
             
             load_projects
         rescue Exception => e
-            NSLog(e.message)
+            NSLog("Error while fetching build status: " + e.message)
         end
     end
     
@@ -85,7 +85,7 @@ class Jenx
             @all_projects['jobs'].each_with_index do |project, index|
                 if index < project_menu_count
                     project_menu_item = NSMenuItem.alloc.init
-                    project_menu_item.setTitle(" " + project['name'])
+                    project_menu_item.setTitle(index.to_s + " " + project['name'])
                     project_menu_item.setToolTip(project['url'])
                     project_menu_item.setEnabled(true)
                     project_menu_item.setIndentationLevel(1)
@@ -101,14 +101,14 @@ class Jenx
             view_all_menu_item.setToolTip(@preferences.build_server_url)
             view_all_menu_item.setIndentationLevel(1)
             view_all_menu_item.setAction("open_web_interface_for:")
-            view_all_menu_item.setTag(@preferences.num_menu_projects + 1)
+            view_all_menu_item.setTag(project_menu_count + 1)
             @jenx_item.menu.insertItem(view_all_menu_item, atIndex:project_menu_count + JENX_STARTING_PROJECT_MENU_INDEX)
             
             @initial_load = false
         else
             NSLog("Refreshing project menu items...")
             @all_projects['jobs'].each_with_index do |project, index| 
-                if index < @preferences.num_menu_projects
+                if index < project_menu_count
                     project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
                     project_menu_item.setImage(get_current_status_icon_for(project['color']))
                 end
@@ -135,14 +135,18 @@ class Jenx
     end
     
     def clear_projects_from_menu
-        for i in 1..(@preferences.num_menu_projects + 1)
+        project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
+        
+        NSLog("Clearing " + (project_menu_count + 1).to_s + " items from the menu...")
+        
+        for i in 1..(project_menu_count + 1)
             @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i))
         end
     end
     
     def create_timer
-        NSLog("Create timer with refresh_time of: " + @preferences.refresh_time.to_s + "...")
         time = (@preferences.refresh_time == 0 || @preferences.refresh_time.empty?) ? 5 : @preferences.refresh_time
+        NSLog("Create timer with refresh_time of: " + time.to_s + " seconds...")
         @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
     end
     
@@ -171,15 +175,18 @@ class Jenx
     end
     
     def growl(title, message)
-        GrowlApplicationBridge.notifyWithTitle(
-           title,
-           description: message,
-           notificationName: "new_messages",
-           iconData: nil,
-           priority: 0,
-           isSticky: false,
-           clickContext: "title test"
-       )
+        if @preferences.enable_growl?
+            NSLog("Sending growl notification: " + title + " " + message)
+            GrowlApplicationBridge.notifyWithTitle(
+               title,
+               description: message,
+               notificationName: title,
+               iconData: nil,
+               priority: 0,
+               isSticky: false,
+               clickContext: "title test"
+           )
+        end
     end
     
     private
@@ -228,7 +235,7 @@ class Jenx
                 when "blue_anime"
                     return @build_initiated_icon
                 else
-                    return @build_success_icon
+                    return @app_icon
             end
         end
         

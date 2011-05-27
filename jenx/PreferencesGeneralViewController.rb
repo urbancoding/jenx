@@ -60,13 +60,19 @@ class PreferencesGeneralViewController <  NSViewController
     end
     
     def save_preferences(sender)
+        NSLog("Saving preferences...")
         @preferences.build_server_url = server_url.stringValue
         @preferences.default_project = @project_list.objectValueOfSelectedItem
         @preferences.refresh_time = refresh_time.intValue
         @preferences.num_menu_projects = num_menu_projects.intValue
+        @preferences.enable_growl = (@enable_growl.state == NSOnState)
         
         NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_PREFERENCES_UPDATED, object:self)
         
         self.view.window.close
+    end
+    
+    def windowWillClose(sender)
+        save_preferences(sender)
     end
 end
