@@ -65,7 +65,7 @@ class Jenx
             @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
             
             status_color = ""
-            @all_projects['jobs'].each do |project| 
+            @all_projects['jobs'].each do |project|
                 status_color = project['color'] if project['name'] == @preferences.default_project
             end
             
@@ -74,13 +74,13 @@ class Jenx
             
             load_projects
         rescue Exception => e
-            NSLog("Error while fetching build status: " + e.message)
+            NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
         end
     end
     
     def load_projects
+        project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
         if @initial_load
-            project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
             NSLog("Initial load of project menu items with " + project_menu_count.to_s + " projects...")
             @all_projects['jobs'].each_with_index do |project, index|
                 if index < project_menu_count

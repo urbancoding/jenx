@@ -71,8 +71,4 @@ class PreferencesGeneralViewController <  NSViewController
         
         self.view.window.close
     end
-    
-    def windowWillClose(sender)
-        save_preferences(sender)
-    end
 end

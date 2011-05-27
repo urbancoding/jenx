@@ -21,11 +21,11 @@ class PreferencesController < NSWindowController
     def init
         if super
             preferences_window = NSWindow.alloc.initWithContentRect(
-                                                             NSMakeRect(0, 0, 550, 260),
-                                                             styleMask:NSTitledWindowMask | NSClosableWindowMask,
-                                                             backing:NSBackingStoreBuffered,
-                                                             defer:true
-                                                             )
+                 NSMakeRect(0, 0, 550, 260),
+                 styleMask:NSTitledWindowMask | NSClosableWindowMask,
+                 backing:NSBackingStoreBuffered,
+                 defer:true
+            )
             preferences_window.setShowsToolbarButton(false)
             self.window = preferences_window
             
@@ -86,34 +86,34 @@ class PreferencesController < NSWindowController
     end
 
     private
-    def setup_toolbar
-        toolbar = NSToolbar.alloc.initWithIdentifier("preferences_toolbar")
-        toolbar.delegate = self
-        toolbar.setAllowsUserCustomization(false)
-        self.window.setToolbar(toolbar)
-    end
+        def setup_toolbar
+            toolbar = NSToolbar.alloc.initWithIdentifier("preferences_toolbar")
+            toolbar.delegate = self
+            toolbar.setAllowsUserCustomization(false)
+            self.window.setToolbar(toolbar)
+        end
 
-    def switch_to_module(mod)
-        @current_module.view.removeFromSuperview if @current_module
-        
-        new_view = mod.view
-        
-        window_frame = self.window.frameRectForContentRect(new_view.frame)
-        window_frame.origin = self.window.frame.origin;
-        window_frame.origin.y -= window_frame.size.height - self.window.frame.size.height
-        self.window.setFrame(window_frame, display:true, animate:true)
-        
-        self.window.toolbar.setSelectedItemIdentifier(mod.identifier)
-        self.window.title = mod.title
-        
-        @current_module = mod
-        self.window.contentView.addSubview(@current_module.view)
-        self.window.setInitialFirstResponder(@current_module.view)
-        
-        NSUserDefaults.standardUserDefaults.setObject(mod.identifier, forKey:PREFERENCES_SELECTION)
-    end
+        def switch_to_module(mod)
+            @current_module.view.removeFromSuperview if @current_module
+            
+            new_view = mod.view
+            
+            window_frame = self.window.frameRectForContentRect(new_view.frame)
+            window_frame.origin = self.window.frame.origin;
+            window_frame.origin.y -= window_frame.size.height - self.window.frame.size.height
+            self.window.setFrame(window_frame, display:true, animate:true)
+            
+            self.window.toolbar.setSelectedItemIdentifier(mod.identifier)
+            self.window.title = mod.title
+            
+            @current_module = mod
+            self.window.contentView.addSubview(@current_module.view)
+            self.window.setInitialFirstResponder(@current_module.view)
+            
+            NSUserDefaults.standardUserDefaults.setObject(mod.identifier, forKey:PREFERENCES_SELECTION)
+        end
 
-    def module_for_identifier(identifier)
-        @modules.find { |mod| mod.identifier == identifier }
-    end
+        def module_for_identifier(identifier)
+            @modules.find { |mod| mod.identifier == identifier }
+        end
 end
