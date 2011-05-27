@@ -47,16 +47,10 @@ class Jenx
     def ensure_connection(sender)
         NSLog("Check connection...")
         @initial_load ? @status_item.setTitle("Refreshing...") : @status_item.setTitle("Connecting...")
-        
-        JenxConnection.new(@preferences.build_server_url).is_connected? ? get_builds : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
-    end
-    
-    def get_builds
-        NSLog("Get builds...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
         end
-        fetch_current_build_status
+        JenxConnection.new(@preferences.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
     end
     
     def fetch_current_build_status
@@ -118,7 +112,7 @@ class Jenx
     
     def handle_broken_connection(error_type)
         NSLog("Connection Error: " + error_type)
-        @refresh_timer.invalidate if @refresh_timer
+        #@refresh_timer.invalidate if @refresh_timer
         @jenx_item.setImage(@build_failure_icon)
         
         if error_type == ERROR_NO_INTERNET_CONNECTION
@@ -126,9 +120,9 @@ class Jenx
             @status_item.setToolTip("No internet connection...")
             growl("Connection Error", "No internet connection...")
         else
-            @status_item.setTitle("Connection to build server cannot be established...")
-            @status_item.setToolTip("Connection to build server cannot be established...")
-            growl("Connection Error", "Connection to build server cannot be established...")
+            @status_item.setTitle("Cannot connect to build server...")
+            @status_item.setToolTip("Cannot connect to build server...")
+            growl("Connection Error", "Cannot connect to build server...")
         end
         
         clear_projects_from_menu
@@ -137,10 +131,10 @@ class Jenx
     def clear_projects_from_menu
         project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
         
-        NSLog("Clearing " + (project_menu_count + 1).to_s + " items from the menu...")
+        NSLog("Clearing " + (project_menu_count + 1).to_s + " items from the menu if they exist...")
         
         for i in 1..(project_menu_count + 1)
-            @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i))
+            @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
         end
     end
     
