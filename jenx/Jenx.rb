@@ -240,18 +240,18 @@ class Jenx
         
         def get_current_status_for(color)
             if @preferences.default_project.empty?
-                return "No default project set"
+                "No default project set"
             end
             
             case color
                 when ""
-                    return "Could not retrieve status"
+                    "Could not retrieve status"
                 when "red"
-                    return "Broken"
+                    "Broken"
                 when "blue_anime"
-                    return "Building"
+                    "Building"
                 else
-                    return "Stable"
+                    "Stable"
             end
         end
 end
