@@ -13,7 +13,7 @@ require 'open-uri'
 require 'net/http'
 
 class Jenx
-    attr_accessor :menu, :status_item
+    attr_accessor :menu, :menu_default_project, :menu_default_project_status, :menu_default_project_update_time
     
     def awakeFromNib
         @initial_load = true
@@ -26,6 +26,8 @@ class Jenx
         JenxPreferences::setup_defaults
         
         @preferences = JenxPreferences.sharedInstance
+        @new_statuses = []
+        @old_statuses = []
         
         initialize_menu_ui_items
         
@@ -37,16 +39,14 @@ class Jenx
     def update_for_preferences(sender)
         @initial_load = true
         
-        @refresh_timer.invalidate if @refresh_timer
         NSLog("Preferences saved, recreating timer...")
-        create_timer
         
         ensure_connection(nil)
     end 
     
     def ensure_connection(sender)
         NSLog("Check connection...")
-        @initial_load ? @status_item.setTitle("Refreshing...") : @status_item.setTitle("Connecting...")
+        @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
         end
@@ -54,22 +54,24 @@ class Jenx
     end
     
     def fetch_current_build_status
-        begin
-            NSLog("Fetch current build status...")
-            @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
-            
-            status_color = ""
-            @all_projects['jobs'].each do |project|
-                status_color = project['color'] if project['name'] == @preferences.default_project
-            end
-            
-            @status_item.setTitle(get_current_status_for(status_color))
-            @jenx_item.setImage(get_current_status_icon_for(status_color))
-            
-            load_projects
-        rescue Exception => e
-            NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
+        @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
+        NSLog("Fetching current build status for #{@all_projects['jobs'].count} projects...")
+        
+        status_color = ""
+        @all_projects['jobs'].each do |project|
+            status_color = project['color'] if project['name'] == @preferences.default_project
         end
+        
+        @menu_default_project.setTitle("Project: " + @preferences.default_project)
+        @menu_default_project_status.setTitle("Status: " + get_current_status_for(status_color))
+        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
+        
+        @jenx_item.setImage(get_current_status_icon_for(status_color))
+        
+        load_projects
+    rescue Exception => e
+        NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
+        retry
     end
     
     def load_projects
@@ -79,8 +81,8 @@ class Jenx
             @all_projects['jobs'].each_with_index do |project, index|
                 if index < project_menu_count
                     project_menu_item = NSMenuItem.alloc.init
-                    project_menu_item.setTitle(index.to_s + " " + project['name'])
-                    project_menu_item.setToolTip(project['url'])
+                    project_menu_item.setTitle(" " + project['name'])
+                    project_menu_item.setToolTip(get_job_url_for(project['name']))
                     project_menu_item.setEnabled(true)
                     project_menu_item.setIndentationLevel(1)
                     project_menu_item.setImage(get_current_status_icon_for(project['color']))
@@ -112,16 +114,15 @@ class Jenx
     
     def handle_broken_connection(error_type)
         NSLog("Connection Error: " + error_type)
-        #@refresh_timer.invalidate if @refresh_timer
         @jenx_item.setImage(@build_failure_icon)
         
         if error_type == ERROR_NO_INTERNET_CONNECTION
-            @status_item.setTitle("No internet connection...")
-            @status_item.setToolTip("No internet connection...")
+            @menu_default_project.setTitle("No internet connection...")
+            @menu_default_project.setToolTip("No internet connection...")
             growl("Connection Error", "No internet connection...")
         else
-            @status_item.setTitle("Cannot connect to build server...")
-            @status_item.setToolTip("Cannot connect to build server...")
+            @menu_default_project.setTitle("Cannot connect to build server...")
+            @menu_default_project.setToolTip("Cannot connect to build server...")
             growl("Connection Error", "Cannot connect to build server...")
         end
         
@@ -131,15 +132,15 @@ class Jenx
     def clear_projects_from_menu
         project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
         
-        NSLog("Clearing " + (project_menu_count + 1).to_s + " items from the menu if they exist...")
+        NSLog("Clearing " + project_menu_count.to_s + " items from the menu if they exist...")
         
-        for i in 1..(project_menu_count + 1)
+        for i in 1..project_menu_count
             @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
         end
     end
     
     def create_timer
-        time = (@preferences.refresh_time == 0 || @preferences.refresh_time.empty?) ? 5 : @preferences.refresh_time
+        time = (@preferences.refresh_time == 0) ? 5 : @preferences.refresh_time
         NSLog("Create timer with refresh_time of: " + time.to_s + " seconds...")
         @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
     end
@@ -222,14 +223,18 @@ class Jenx
             GrowlApplicationBridge.setGrowlDelegate(self)
         end
     
+        def get_job_url_for(project)
+            "#{@preferences.build_server_url}/job/#{project}"
+        end
+    
         def get_current_status_icon_for(color)
             case color
                 when "red"
-                    return @build_failure_icon
+                    @build_failure_icon
                 when "blue_anime"
-                    return @build_initiated_icon
+                    @build_initiated_icon
                 else
-                    return @app_icon
+                    @app_icon
             end
         end
         
@@ -242,11 +247,11 @@ class Jenx
                 when ""
                     return "Could not retrieve status"
                 when "red"
-                    return @preferences.default_project + ": Broken"
+                    return "Broken"
                 when "blue_anime"
-                    return @preferences.default_project + ": Building"
+                    return "Building"
                 else
-                    return @preferences.default_project + ": Stable"
+                    return "Stable"
             end
         end
 end
