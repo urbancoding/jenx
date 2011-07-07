@@ -57,16 +57,13 @@ class Jenx
         @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
         NSLog("Fetching current build status for #{@all_projects['jobs'].count} projects...")
         
-        status_color = ""
         @all_projects['jobs'].each do |project|
-            status_color = project['color'] if project['name'] == @preferences.default_project
+            @jenx_item.setImage(get_current_status_icon_for(project['color'])) if project['name'] == @preferences.default_project
         end
         
         @menu_default_project.setTitle("Project: " + @preferences.default_project)
         @menu_default_project_status.setTitle("Status: " + get_current_status_for(status_color))
-        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
-        
-        @jenx_item.setImage(get_current_status_icon_for(status_color))
+        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p")) 
         
         load_projects
     rescue Exception => e
