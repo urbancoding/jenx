@@ -26,26 +26,22 @@ class Jenx
         JenxPreferences::setup_defaults
         
         @preferences = JenxPreferences.sharedInstance
-        @new_statuses = []
-        @old_statuses = []
         
         initialize_menu_ui_items
-        
-        register_observers
-        
+        register_observers        
         register_growl
     end
     
     def update_for_preferences(sender)
-        @initial_load = true
-        
         NSLog("Preferences saved, recreating timer...")
         
+        @initial_load = true
+
         ensure_connection(nil)
     end 
     
     def ensure_connection(sender)
-        NSLog("Check connection...")
+        NSLog("Checking connection...")
         @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
@@ -56,15 +52,15 @@ class Jenx
     def fetch_current_build_status
         @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
         NSLog("Fetching current build status for #{@all_projects['jobs'].count} projects...")
-        
-        @all_projects['jobs'].each do |project|
-            @jenx_item.setImage(get_current_status_icon_for(project['color'])) if project['name'] == @preferences.default_project
-        end
+
+        default_project_status_color = nil
+        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].to_lower.eql?(@preferences.default_project.to_lower)}
         
         @menu_default_project.setTitle("Project: " + @preferences.default_project)
-        @menu_default_project_status.setTitle("Status: " + get_current_status_for(status_color))
-        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p")) 
-        
+        @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
+        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
+        @jenx_item.setImage(get_current_status_icon_for(default_project_status_color))
+
         load_projects
     rescue Exception => e
         NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
