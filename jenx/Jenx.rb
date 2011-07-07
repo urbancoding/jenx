@@ -10,7 +10,6 @@ framework 'Growl'
 require 'rubygems'
 require 'json'
 require 'open-uri'
-require 'net/http'
 
 class Jenx
     attr_accessor :menu, :menu_default_project, :menu_default_project_status, :menu_default_project_update_time
@@ -42,6 +41,7 @@ class Jenx
     
     def ensure_connection(sender)
         NSLog("Checking connection...")
+        
         @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
@@ -54,7 +54,7 @@ class Jenx
         NSLog("Fetching current build status for #{@all_projects['jobs'].count} projects...")
 
         default_project_status_color = nil
-        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].to_lower.eql?(@preferences.default_project.to_lower)}
+        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@preferences.default_project.downcase)}
         
         @menu_default_project.setTitle("Project: " + @preferences.default_project)
         @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
