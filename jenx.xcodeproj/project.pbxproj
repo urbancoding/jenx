@@ -140,7 +140,7 @@
 				96CCF19813838DD50010CC22 /* Jenx.rb */,
 				96B6FD0A138626F3009C1021 /* Assets */,
 				96B6FD09138626E2009C1021 /* Controllers */,
-				96FB008013864264001EB442 /* Models */,
+				96FB008013864264001EB442 /* Classes */,
 				96CCF19113838DD50010CC22 /* Views */,
 				96CCF19513838DD50010CC22 /* Other Sources */,
 				96CCF18913838DD50010CC22 /* Supporting Files */,
@@ -176,7 +176,7 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		96FB008013864264001EB442 /* Models */ = {
+		96FB008013864264001EB442 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				96B6FD0713862428009C1021 /* JenxConstants.rb */,
@@ -184,7 +184,7 @@
 				9680168B138B6A2800050ED2 /* JenxConnection.rb */,
 				96801688138B26F500050ED2 /* JenxConnectionManager.rb */,
 			);
-			name = Models;
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

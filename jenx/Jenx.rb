@@ -59,7 +59,8 @@ class Jenx
         @menu_default_project.setTitle("Project: " + @preferences.default_project)
         @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
         @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
-        @jenx_item.setImage(get_current_status_icon_for(default_project_status_color))
+        
+        @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
 
         load_projects
     rescue Exception => e
@@ -78,7 +79,7 @@ class Jenx
                     project_menu_item.setToolTip(get_job_url_for(project['name']))
                     project_menu_item.setEnabled(true)
                     project_menu_item.setIndentationLevel(1)
-                    project_menu_item.setImage(get_current_status_icon_for(project['color']))
+                    project_menu_item.setImage(get_current_status_icon_for(project['color'], nil))
                     project_menu_item.setAction("open_web_interface_for:")
                     project_menu_item.setTag(index + 1)
                     @jenx_item.menu.insertItem(project_menu_item, atIndex:index + JENX_STARTING_PROJECT_MENU_INDEX)
@@ -99,7 +100,7 @@ class Jenx
             @all_projects['jobs'].each_with_index do |project, index| 
                 if index < project_menu_count
                     project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
-                    project_menu_item.setImage(get_current_status_icon_for(project['color']))
+                    project_menu_item.setImage(get_current_status_icon_for(project['color'], project_menu_item.image.name))
                 end
             end
         end
@@ -162,17 +163,17 @@ class Jenx
     def growlNotificationTimedOut(clickContext)
     end
     
-    def growl(title, message)
+    def growl(title, message, notification_name)
         if @preferences.enable_growl?
             NSLog("Sending growl notification: " + title + " " + message)
             GrowlApplicationBridge.notifyWithTitle(
                title,
                description: message,
-               notificationName: title,
+               notificationName: notification_name,
                iconData: nil,
                priority: 0,
                isSticky: false,
-               clickContext: "title test"
+               clickContext: title
            )
         end
     end
@@ -211,7 +212,7 @@ class Jenx
                object:nil
             )
         end
-    
+        
         def register_growl
             GrowlApplicationBridge.setGrowlDelegate(self)
         end
@@ -220,13 +221,15 @@ class Jenx
             "#{@preferences.build_server_url}/job/#{project}"
         end
     
-        def get_current_status_icon_for(color)
+        def get_current_status_icon_for(color, current_image)
             case color
                 when "red"
+                    growl("Build failure", "There is a build failure", "Build Failure")
                     @build_failure_icon
                 when "blue_anime"
                     @build_initiated_icon
                 else
+                    growl("Build success", "Build success", "Build Success")
                     @app_icon
             end
         end

@@ -6,11 +6,13 @@
 <integer>1</integer>
 <key>AllNotifications</key>
 <array>
-<string>new_messages</string>
+<string>Build Failure</string>
+<string>Build Success</string>
 </array>
 <key>DefaultNotifications</key>
 <array>
-<string>new_messages</string>
+<string>Build Failure</string>
+<string>Build Success</string>
 </array>
 </dict>
 </plist>
