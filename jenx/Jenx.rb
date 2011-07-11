@@ -1,5 +1,5 @@
 #
-#  AppDelegate.rb
+#  Jenx.rb
 #  jenx
 #
 #  Created by Trent Kocurek on 5/18/11.
@@ -113,11 +113,11 @@ class Jenx
         if error_type == ERROR_NO_INTERNET_CONNECTION
             @menu_default_project.setTitle("No internet connection...")
             @menu_default_project.setToolTip("No internet connection...")
-            growl("Connection Error", "No internet connection...")
+            growl("Connection Error", "No internet connection...", "Connection Failure")
         else
             @menu_default_project.setTitle("Cannot connect to build server...")
             @menu_default_project.setToolTip("Cannot connect to build server...")
-            growl("Connection Error", "Cannot connect to build server...")
+            growl("Connection Error", "Cannot connect to build server...", "Connection Failure")
         end
         
         clear_projects_from_menu

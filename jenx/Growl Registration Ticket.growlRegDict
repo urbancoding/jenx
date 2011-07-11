@@ -6,11 +6,13 @@
 <integer>1</integer>
 <key>AllNotifications</key>
 <array>
+<string>Connection Failure</string>
 <string>Build Failure</string>
 <string>Build Success</string>
 </array>
 <key>DefaultNotifications</key>
 <array>
+<string>Connection Failure</string>
 <string>Build Failure</string>
 <string>Build Success</string>
 </array>
