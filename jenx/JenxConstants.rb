@@ -27,3 +27,11 @@ NOTIFICATION_PREFERENCES_UPDATED = "preferences_updated"
 #errors
 ERROR_NO_INTERNET_CONNECTION = "no_internet_connection"
 ERROR_SERVER_CANNOT_BE_CONTACTED = "server_cannot_be_contacted"
+CONNECTION_ERROR = "Connection Error"
+CANNOT_CONNECT_TO_BUILD_SERVER = "Connection to build server cannot be established."
+CANNOT_CONNECT_TO_INTERNET = "Internet connection cannot be established."
+
+#growl notification types
+CONNECTION_FAILURE = "Connection Failure"
+BUILD_FAILURE = "Build Failure"
+BUILD_SUCCESS = "Build Success"

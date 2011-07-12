@@ -105,17 +105,17 @@ class Jenx
     end
     
     def handle_broken_connection(error_type)
-        NSLog("Connection Error: " + error_type)
+        NSLog("#{CONNECTION_ERROR}: " + error_type)
         @jenx_item.setImage(@build_failure_icon)
         
         if error_type == ERROR_NO_INTERNET_CONNECTION
-            @menu_default_project.setTitle("No internet connection...")
-            @menu_default_project.setToolTip("No internet connection...")
-            @notification_center.notify("Connection Error", "No internet connection...", "Connection Failure")
+            @menu_default_project.setTitle(CANNOT_CONNECT_TO_INTERNET)
+            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_INTERNET)
+            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, CONNECTION_FAILURE)
         else
-            @menu_default_project.setTitle("Cannot connect to build server...")
-            @menu_default_project.setToolTip("Cannot connect to build server...")
-            @notification_center.notify("Connection Error", "Cannot connect to build server...", "Connection Failure")
+            @menu_default_project.setTitle(CANNOT_CONNECT_TO_BUILD_SERVER)
+            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_BUILD_SERVER)
+            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, CONNECTION_FAILURE)
         end
         
         clear_projects_from_menu
@@ -137,7 +137,6 @@ class Jenx
         @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
     end
     
-    #actions
     def open_web_interface_for(sender)
         project_url = NSURL.alloc.initWithString(sender.toolTip)
         workspace = NSWorkspace.sharedWorkspace
@@ -192,12 +191,12 @@ class Jenx
         def get_current_status_icon_for(color, current_image)
             case color
                 when "red"
-                    @notification_center.notify("Build failure", "There is a build failure", "Build Failure")
+                    @notification_center.notify(BUILD_FAILURE, "There is a build failure", BUILD_FAILURE)
                     @build_failure_icon
                 when "blue_anime"
                     @build_initiated_icon
                 else
-                    @notification_center.notify("Build success", "Build success", "Build Success")
+                    @notification_center.notify(BUILD_SUCCESS, "Build success", BUILD_SUCCESS)
                     @app_icon
             end
         end
