@@ -12,19 +12,33 @@ Jenx is written in MacRuby and has these features:
 
 ![screenshot](http://urbancoding.github.com/jenx/images/preferences.png)
 
-# Requirements #
+Requirements
+------------
 
 * Mac OS X 10.6 (Snow Leopard) or higher
 * [MacRuby](http://macruby.com/) 1.0 (nightly build, 2011-04-14 or newer)
 
-# Updates, Changelog & Feedback
+Updates, Changelog & Feedback
+------------
 
-1.0 Currently only supports non-secure implementations.
+* 1.0 Currently only supports non-secure implementations.
 
-# Contact #
+Contact
+------------
 
 Hop into the IRC channel: [#jenx](irc://freenode/jenx)
 
-# Copyright Info #
+Contributing
+------------
+**Everyone** is encouraged to help improve this project.
 
-Copyright (c) 2008 - 2011 Trent Kocurek ([@tkocurek](http://twitter.com/tkocurek)), released under the MIT license.
+Here are some ways *you* can contribute:
+
+* by reporting bugs
+* by suggesting new features
+* by writing or editing documentation
+* by writing specifications
+* by writing code (**no patch is too small**: fix typos, add comments, clean up inconsistent whitespace)
+* by refactoring code
+* by reviewing patches
+
