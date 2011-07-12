@@ -111,11 +111,11 @@ class Jenx
         if error_type == ERROR_NO_INTERNET_CONNECTION
             @menu_default_project.setTitle(CANNOT_CONNECT_TO_INTERNET)
             @menu_default_project.setToolTip(CANNOT_CONNECT_TO_INTERNET)
-            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, CONNECTION_FAILURE)
+            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, "", CONNECTION_FAILURE)
         else
             @menu_default_project.setTitle(CANNOT_CONNECT_TO_BUILD_SERVER)
             @menu_default_project.setToolTip(CANNOT_CONNECT_TO_BUILD_SERVER)
-            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, CONNECTION_FAILURE)
+            @notification_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, "", CONNECTION_FAILURE)
         end
         
         clear_projects_from_menu
@@ -158,6 +158,9 @@ class Jenx
             @build_success_icon = NSImage.imageNamed('build_success.tiff')
             @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
             @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
+            
+            @jenx_success = NSImage.imageNamed('jenx_success.tiff')
+            @jenx_failure = NSImage.imageNamed('jenx_failure.tiff')
         end
     
         def register_observers
@@ -191,12 +194,12 @@ class Jenx
         def get_current_status_icon_for(color, current_image)
             case color
                 when "red"
-                    @notification_center.notify(BUILD_FAILURE, "There is a build failure", BUILD_FAILURE)
+                    @notification_center.notify(BUILD_FAILURE, "There is a build failure", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
                     @build_failure_icon
                 when "blue_anime"
                     @build_initiated_icon
                 else
-                    @notification_center.notify(BUILD_SUCCESS, "Build success", BUILD_SUCCESS)
+                    @notification_center.notify(BUILD_SUCCESS, "Build success", @jenx_success.TIFFRepresentation, BUILD_SUCCESS)
                     @app_icon
             end
         end

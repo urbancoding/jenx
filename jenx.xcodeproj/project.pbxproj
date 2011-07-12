@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
+		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
+		96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B7013CBE2610028D5A8 /* jenx_success.tiff */; };
 		9654D82013CAD9AD00FC2602 /* jenx.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9654D81F13CAD9AD00FC2602 /* jenx.icns */; };
 		96801662138A3BB800050ED2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9680166F138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
+		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
+		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
 		9654D81F13CAD9AD00FC2602 /* jenx.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = jenx.icns; path = images/jenx.icns; sourceTree = "<group>"; };
 		96801661138A3BB800050ED2 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Library/Frameworks/Growl.framework; sourceTree = SDKROOT; };
 		9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 		96803B891384CA0600D5DD90 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */,
+				96512B7013CBE2610028D5A8 /* jenx_success.tiff */,
 				9654D81F13CAD9AD00FC2602 /* jenx.icns */,
 				96EB2828138A04DF00D02D6B /* connecting.tiff */,
 				96803B8C1384CB4000D5DD90 /* app.tiff */,
@@ -278,6 +284,8 @@
 				9680168C138B6A2800050ED2 /* JenxConnection.rb in Resources */,
 				9654D82013CAD9AD00FC2602 /* jenx.icns in Resources */,
 				96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */,
+				96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */,
+				96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

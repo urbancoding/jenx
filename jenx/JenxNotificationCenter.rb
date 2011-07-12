@@ -22,18 +22,20 @@ class JenxNotificationCenter
     def growlNotificationTimedOut(clickContext)
     end
 
-    def notify(title, message, notification_name)
+    def notify(title, message, image, notification_name)
         if @preferences.enable_growl?
-            NSLog("Sending growl notification: " + title + " " + message)
-            GrowlApplicationBridge.notifyWithTitle(
-                                                   title,
-                                                   description: message,
-                                                   notificationName: notification_name,
-                                                   iconData: nil,
-                                                   priority: 0,
-                                                   isSticky: false,
-                                                   clickContext: title
-                                                   )
+            NSLog("Sending growl notification - Title: " + title + ", Message: " + message + ", Notification Name: " + notification_name)
+            
+            GrowlApplicationBridge
+                .notifyWithTitle(
+                               title,
+                               description: message,
+                               notificationName: notification_name,
+                               iconData: image,
+                               priority: 0,
+                               isSticky: false,
+                               clickContext: title
+                               )
         end
     end
 end
