@@ -23,17 +23,15 @@ class Jenx
         @jenx_item.setMenu(@menu)
         
         JenxPreferences::setup_defaults
-        
         @preferences = JenxPreferences.sharedInstance
+        @notification_center = JenxNotificationCenter.new(@preferences)
         
         initialize_menu_ui_items
-        register_observers        
-        register_growl
+        register_observers
     end
     
     def update_for_preferences(sender)
         NSLog("Preferences saved, recreating timer...")
-        
         @initial_load = true
 
         ensure_connection(nil)
@@ -113,11 +111,11 @@ class Jenx
         if error_type == ERROR_NO_INTERNET_CONNECTION
             @menu_default_project.setTitle("No internet connection...")
             @menu_default_project.setToolTip("No internet connection...")
-            growl("Connection Error", "No internet connection...", "Connection Failure")
+            @notification_center.notify("Connection Error", "No internet connection...", "Connection Failure")
         else
             @menu_default_project.setTitle("Cannot connect to build server...")
             @menu_default_project.setToolTip("Cannot connect to build server...")
-            growl("Connection Error", "Cannot connect to build server...", "Connection Failure")
+            @notification_center.notify("Connection Error", "Cannot connect to build server...", "Connection Failure")
         end
         
         clear_projects_from_menu
@@ -150,32 +148,6 @@ class Jenx
         clear_projects_from_menu
         NSApplication.sharedApplication.activateIgnoringOtherApps(true)
         PreferencesController.sharedController.showWindow(sender)
-    end
-    
-    # Growl delegate
-    def applicationNameForGrowl
-        "Jenx"
-    end
-    
-    def growlNotificationWasClicked(clickContext)
-    end
-    
-    def growlNotificationTimedOut(clickContext)
-    end
-    
-    def growl(title, message, notification_name)
-        if @preferences.enable_growl?
-            NSLog("Sending growl notification: " + title + " " + message)
-            GrowlApplicationBridge.notifyWithTitle(
-               title,
-               description: message,
-               notificationName: notification_name,
-               iconData: nil,
-               priority: 0,
-               isSticky: false,
-               clickContext: title
-           )
-        end
     end
     
     private
@@ -212,10 +184,6 @@ class Jenx
                object:nil
             )
         end
-        
-        def register_growl
-            GrowlApplicationBridge.setGrowlDelegate(self)
-        end
     
         def get_job_url_for(project)
             "#{@preferences.build_server_url}/job/#{project}"
@@ -224,12 +192,12 @@ class Jenx
         def get_current_status_icon_for(color, current_image)
             case color
                 when "red"
-                    growl("Build failure", "There is a build failure", "Build Failure")
+                    @notification_center.notify("Build failure", "There is a build failure", "Build Failure")
                     @build_failure_icon
                 when "blue_anime"
                     @build_initiated_icon
                 else
-                    growl("Build success", "Build success", "Build Success")
+                    @notification_center.notify("Build success", "Build success", "Build Success")
                     @app_icon
             end
         end

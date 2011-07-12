@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		9654D82013CAD9AD00FC2602 /* jenx.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9654D81F13CAD9AD00FC2602 /* jenx.icns */; };
 		96801662138A3BB800050ED2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9680166F138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		9654D81F13CAD9AD00FC2602 /* jenx.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = jenx.icns; path = images/jenx.icns; sourceTree = "<group>"; };
 		96801661138A3BB800050ED2 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Library/Frameworks/Growl.framework; sourceTree = SDKROOT; };
 		9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				96FB0082138642C4001EB442 /* JenxPreferences.rb */,
 				9680168B138B6A2800050ED2 /* JenxConnection.rb */,
 				96801688138B26F500050ED2 /* JenxConnectionManager.rb */,
+				96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				96801689138B26F500050ED2 /* JenxConnectionManager.rb in Resources */,
 				9680168C138B6A2800050ED2 /* JenxConnection.rb in Resources */,
 				9654D82013CAD9AD00FC2602 /* jenx.icns in Resources */,
+				96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
