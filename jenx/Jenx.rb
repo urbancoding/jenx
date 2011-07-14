@@ -12,7 +12,10 @@ require 'json'
 require 'open-uri'
 
 class Jenx
-    attr_accessor :menu, :menu_default_project, :menu_default_project_status, :menu_default_project_update_time
+    attr_accessor :menu 
+    attr_accessor :menu_default_project
+    attr_accessor :menu_default_project_status
+    attr_accessor :menu_default_project_update_time
     
     def awakeFromNib
         @initial_load = true
