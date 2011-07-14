@@ -19,6 +19,7 @@ class Jenx
     
     def awakeFromNib
         @initial_load = true
+        @editing_preferences = false
         
         @status_bar = NSStatusBar.systemStatusBar
         @jenx_item = @status_bar.statusItemWithLength(NSVariableStatusItemLength)
@@ -38,19 +39,21 @@ class Jenx
     
     def update_for_preferences(sender)
         NSLog("Preferences saved, recreating timer...")
+        @editing_preferences = false
         @initial_load = true
 
         ensure_connection(nil)
-    end 
+    end
     
     def ensure_connection(sender)
-        NSLog("Checking connection...")
-        
-        @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
-        if @refresh_timer.nil? || !@refresh_timer.isValid
-            create_timer
+        if !@editing_preferences
+            NSLog("Checking connection...")
+            @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
+            if @refresh_timer.nil? || !@refresh_timer.isValid
+                create_timer
+            end
+            JenxConnection.new(@preferences.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
         end
-        JenxConnection.new(@preferences.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
     end
     
     def fetch_current_build_status
@@ -71,7 +74,7 @@ class Jenx
         load_projects
     rescue Exception => e
         NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
-        retry
+        retry if !@editing_preferences
     end
     
     def load_projects
@@ -142,7 +145,7 @@ class Jenx
         
         NSLog("Clearing " + project_menu_count.to_s + " items from the menu if they exist...")
         
-        for i in 1..project_menu_count
+        for i in 1..project_menu_count + 1
             @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
         end
     end
@@ -160,6 +163,8 @@ class Jenx
     end
     
     def show_preferences_window(sender)
+        @editing_preferences = true
+        
         clear_projects_from_menu
         NSApplication.sharedApplication.activateIgnoringOtherApps(true)
         PreferencesController.sharedController.showWindow(sender)
@@ -186,13 +191,6 @@ class Jenx
                self,
                selector:"update_for_preferences:",
                name:NOTIFICATION_PREFERENCES_UPDATED,
-               object:nil
-            )
-            
-            notification_center.addObserver(
-               self,
-               selector:"update_for_preferences:",
-               name:NSWindowWillCloseNotification,
                object:nil
             )
             
@@ -237,7 +235,6 @@ class Jenx
         end
     
         def present_build_status
-            
             num_failed_projects = @build_status_all_projects.count
             
             case @build_status_default_project.to_sym
@@ -248,7 +245,7 @@ class Jenx
                         @notification_center.notify(BUILD_FAILURE, "All projects are failing.", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
                     end
                 end
-            when :blue
+                when :blue
                     if (num_failed_projects != @preferences.num_menu_projects && num_failed_projects > 0)
                         @notification_center.notify(@preferences.default_project + " has passed", "Although, #{num_failed_projects} project(s) are failing.", @jenx_issues.TIFFRepresentation, BUILD_ISSUES)
                     else if (num_failed_projects == @preferences.num_menu_projects)
