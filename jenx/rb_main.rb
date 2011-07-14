@@ -3,7 +3,7 @@
 #  jenx
 #
 #  Created by Trent Kocurek on 5/18/11.
-#  Copyright (c) 2011 Urban Coding. All rights reserved.
+#  Copyright (c) 2011 Urban Coding. Released under the MIT license.
 #
 
 # Loading the Cocoa framework. If you need to load more frameworks, you can

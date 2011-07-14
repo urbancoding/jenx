@@ -33,6 +33,7 @@
 		96CCF19913838DD50010CC22 /* Jenx.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19813838DD50010CC22 /* Jenx.rb */; };
 		96EB2829138A04DF00D02D6B /* connecting.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EB2828138A04DF00D02D6B /* connecting.tiff */; };
 		96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96EF2B9D1384E2E8002A755A /* build_success.tiff */; };
+		96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96F678DC13CE753D003BFD59 /* JenxStartup.rb */; };
 		96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0082138642C4001EB442 /* JenxPreferences.rb */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		96CCF19813838DD50010CC22 /* Jenx.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = Jenx.rb; sourceTree = "<group>"; };
 		96EB2828138A04DF00D02D6B /* connecting.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = connecting.tiff; path = images/connecting.tiff; sourceTree = "<group>"; };
 		96EF2B9D1384E2E8002A755A /* build_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_success.tiff; path = images/build_success.tiff; sourceTree = "<group>"; };
+		96F678DC13CE753D003BFD59 /* JenxStartup.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxStartup.rb; sourceTree = "<group>"; };
 		96FB0082138642C4001EB442 /* JenxPreferences.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxPreferences.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,6 +197,7 @@
 				9680168B138B6A2800050ED2 /* JenxConnection.rb */,
 				96801688138B26F500050ED2 /* JenxConnectionManager.rb */,
 				96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */,
+				96F678DC13CE753D003BFD59 /* JenxStartup.rb */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */,
 				96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */,
 				96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */,
+				96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
