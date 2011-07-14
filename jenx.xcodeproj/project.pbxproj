@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
 		96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B7013CBE2610028D5A8 /* jenx_success.tiff */; };
@@ -37,6 +38,19 @@
 		96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96F678DC13CE753D003BFD59 /* JenxStartup.rb */; };
 		96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0082138642C4001EB442 /* JenxPreferences.rb */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9642B29F13CF4F3C00B50334 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
@@ -231,6 +245,7 @@
 				96CCF17B13838DD50010CC22 /* Sources */,
 				96CCF17C13838DD50010CC22 /* Frameworks */,
 				96CCF17D13838DD50010CC22 /* Resources */,
+				9642B29F13CF4F3C00B50334 /* CopyFiles */,
 			);
 			buildRules = (
 			);
