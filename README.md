@@ -21,7 +21,7 @@ Requirements
 Updates, Changelog & Feedback
 ------------
 
-* 1.0 Currently only supports non-secure implementations.
+* Beta 1: You can get it here [Jenx Beta1](http://urbancoding.github.com/jenx/jenx/versions/beta1/Jenx.dmg)
 
 Contact
 ------------
