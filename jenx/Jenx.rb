@@ -26,6 +26,9 @@ class Jenx
         @preferences = JenxPreferences.sharedInstance
         @notification_center = JenxNotificationCenter.new(@preferences)
         
+        @build_status_default_project = '';
+        @build_status_all_projects = [];
+        
         initialize_menu_ui_items
         register_observers
     end
@@ -58,6 +61,8 @@ class Jenx
         @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
         @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
         
+        @build_status_default_project = default_project_status_color
+        
         @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
 
         load_projects
@@ -81,6 +86,8 @@ class Jenx
                     project_menu_item.setAction("open_web_interface_for:")
                     project_menu_item.setTag(index + 1)
                     @jenx_item.menu.insertItem(project_menu_item, atIndex:index + JENX_STARTING_PROJECT_MENU_INDEX)
+                    
+                    @build_status_all_projects << :red if project['color'].eql?("red")
                 end
             end
             
@@ -95,13 +102,19 @@ class Jenx
             @initial_load = false
         else
             NSLog("Refreshing project menu items...")
+            
+            @build_status_all_projects = []
+            
             @all_projects['jobs'].each_with_index do |project, index| 
                 if index < project_menu_count
                     project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
                     project_menu_item.setImage(get_current_status_icon_for(project['color'], project_menu_item.image.name))
+                    
+                    @build_status_all_projects << :red if project['color'].eql?("red")
                 end
             end
         end
+        present_build_status
     end
     
     def handle_broken_connection(error_type)
@@ -161,6 +174,7 @@ class Jenx
             
             @jenx_success = NSImage.imageNamed('jenx_success.tiff')
             @jenx_failure = NSImage.imageNamed('jenx_failure.tiff')
+            @jenx_issues = NSImage.imageNamed('jenx_yield.tiff')
         end
     
         def register_observers
@@ -192,14 +206,12 @@ class Jenx
         end
     
         def get_current_status_icon_for(color, current_image)
-            case color
-                when "red"
-                    @notification_center.notify(BUILD_FAILURE, "There is a build failure", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
+            case color.to_sym
+                when :red
                     @build_failure_icon
-                when "blue_anime"
+                when :blue_anime
                     @build_initiated_icon
                 else
-                    @notification_center.notify(BUILD_SUCCESS, "Build success", @jenx_success.TIFFRepresentation, BUILD_SUCCESS)
                     @app_icon
             end
         end
@@ -209,15 +221,39 @@ class Jenx
                 "No default project set"
             end
             
-            case color
+            case color.to_sym
                 when ""
                     "Could not retrieve status"
-                when "red"
+                when :red
                     "Broken"
-                when "blue_anime"
+                when :blue_anime
                     "Building"
                 else
                     "Stable"
+            end
+        end
+    
+        def present_build_status
+            
+            num_failed_projects = @build_status_all_projects.count
+            
+            case @build_status_default_project.to_sym
+                when :red
+                    if (num_failed_projects != @preferences.num_menu_projects && num_failed_projects > 0)
+                        @notification_center.notify(@preferences.default_project + " has failed", "You also have #{num_failed_projects} project(s) that are failing.", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
+                    else if (num_failed_projects == @preferences.num_menu_projects)
+                        @notification_center.notify(BUILD_FAILURE, "All projects are failing.", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
+                    end
+                end
+            when :blue
+                    if (num_failed_projects != @preferences.num_menu_projects && num_failed_projects > 0)
+                        @notification_center.notify(@preferences.default_project + " has passed", "Although, #{num_failed_projects} project(s) are failing.", @jenx_issues.TIFFRepresentation, BUILD_ISSUES)
+                    else if (num_failed_projects == @preferences.num_menu_projects)
+                        @notification_center.notify(@preferences.default_project + " has passed", "Although, all other projects are failing.", @jenx_issues.TIFFRepresentation, BUILD_ISSUES)
+                    else
+                        @notification_center.notify(BUILD_SUCCESS, "All projects are passing!", @jenx_success.TIFFRepresentation, BUILD_SUCCESS)
+                    end
+                end
             end
         end
 end

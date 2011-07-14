@@ -9,12 +9,14 @@
 <string>Connection Failure</string>
 <string>Build Failure</string>
 <string>Build Success</string>
+<string>Build Issues</string>
 </array>
 <key>DefaultNotifications</key>
 <array>
 <string>Connection Failure</string>
 <string>Build Failure</string>
 <string>Build Success</string>
+<string>Build Issues</string>
 </array>
 </dict>
 </plist>
