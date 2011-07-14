@@ -20,6 +20,7 @@ PREFERENCES_REFRESH_TIME_INTERVAL = "refresh_time_interval"
 PREFERENCES_SELECTION = "preferences_selection"
 PREFERENCES_TOOLBAR_ITEM_GENERAL = "preferences_toolbar_item_general"
 PREFERENCES_ENABLE_GROWL = "enable_growl"
+PREFERENCES_ENABLE_AUTO_LAUNCH = "enable_auto_launch"
 
 #notifications
 NOTIFICATION_PREFERENCES_UPDATED = "preferences_updated"

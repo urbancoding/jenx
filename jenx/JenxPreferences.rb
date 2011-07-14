@@ -63,6 +63,14 @@ class JenxPreferences
         NSUserDefaults.standardUserDefaults.synchronize
     end
 
+    def launch_at_login?
+        JenxStartup.alloc.init.is_set?
+    end
+
+    def launch_at_login=(val)
+        JenxStartup.alloc.init.set(val)
+    end
+
     class << self
         def setup_defaults
             NSUserDefaults.standardUserDefaults.registerDefaults(

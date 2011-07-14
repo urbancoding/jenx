@@ -243,6 +243,9 @@
 /* Begin PBXProject section */
 		96CCF17613838DD50010CC22 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Urban Coding";
+			};
 			buildConfigurationList = 96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

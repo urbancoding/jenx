@@ -15,6 +15,7 @@ class PreferencesGeneralViewController <  NSViewController
     attr_accessor :refresh_time
     attr_accessor :num_menu_projects
     attr_accessor :enable_growl
+    attr_accessor :launch_at_login
     
     def title
         "Settings"
@@ -39,6 +40,8 @@ class PreferencesGeneralViewController <  NSViewController
         
         @refresh_time.intValue = @preferences.refresh_time
         @num_menu_projects.intValue = @preferences.num_menu_projects
+        @enable_growl.state = @preferences.enable_growl? ? NSOnState : NSOffState
+        @launch_at_login.state = @preferences.launch_at_login? ? NSOnState : NSOffState
     end
     
     def load_projects(sender)
@@ -66,6 +69,7 @@ class PreferencesGeneralViewController <  NSViewController
         @preferences.refresh_time = refresh_time.intValue
         @preferences.num_menu_projects = num_menu_projects.intValue
         @preferences.enable_growl = (@enable_growl.state == NSOnState)
+        @preferences.launch_at_login = (@launch_at_login.state == NSOnState)
         
         NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_PREFERENCES_UPDATED, object:self)
         
