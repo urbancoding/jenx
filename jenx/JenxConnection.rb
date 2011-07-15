@@ -6,9 +6,6 @@
 #  Copyright 2011 Urban Coding. Released under the MIT license.
 #
 
-require 'open-uri'
-require 'net/http'
-
 class JenxConnection
     def initialize(url)
         @url = url

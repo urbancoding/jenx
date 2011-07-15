@@ -9,6 +9,13 @@
 # Loading the Cocoa framework. If you need to load more frameworks, you can
 # do that here too.
 framework 'Cocoa'
+framework 'Growl'
+
+require 'rubygems'
+require 'json'
+require 'timeout'
+require 'net/http'
+require 'open-uri'
 
 # Loading all the Ruby project files.
 main = File.basename(__FILE__, File.extname(__FILE__))

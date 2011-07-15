@@ -18,6 +18,15 @@ class JenxPreferences
         self
     end
 
+    def first_jenx_run?
+        NSUserDefaults.standardUserDefaults.boolForKey(PREFERENCES_JENX_INITIAL_LOAD)
+    end
+
+    def first_jenx_run=(val)
+        NSUserDefaults.standardUserDefaults.setObject(val, forKey:PREFERENCES_JENX_INITIAL_LOAD)
+        NSUserDefaults.standardUserDefaults.synchronize
+    end
+
     def build_server_url
         NSUserDefaults.standardUserDefaults.stringForKey(PREFERENCES_BUILD_SERVER_URL) 
     end
@@ -69,6 +78,10 @@ class JenxPreferences
 
     def launch_at_login=(val)
         JenxStartup.alloc.init.set(val)
+    end
+
+    def are_invalid?
+        build_server_url.empty? || default_project.empty?
     end
 
     class << self

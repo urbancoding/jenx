@@ -15,7 +15,7 @@ class JenxConnectionManager
     end
     
     def value
-        @group.wait(8)
+        @group.wait(5)
         @value
     end
 end

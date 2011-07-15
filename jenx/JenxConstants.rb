@@ -13,6 +13,7 @@ JENX_MAX_PROJECTS_TO_SHOW = 10
 JENX_REFRESH_TIME_INTERVAL = 10.0 #seconds
 
 #preferences
+PREFERENCES_JENX_INITIAL_LOAD = "initial_jenx_load"
 PREFERENCES_BUILD_SERVER_URL = "build_server_url"
 PREFERENCES_DEFAULT_PROJECT = "default_project"
 PREFERENCES_MAX_PROJECTS_TO_SHOW = "max_project_to_show"

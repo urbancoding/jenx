@@ -31,7 +31,7 @@ class JenxStartup
                 to_remove = nil
                 
                 copy_value.each do |application|
-                    to_remove = application and break if app.valueForKey("Path") == path
+                    to_remove = application and break if application.valueForKey("Path") == path
                 end
                 
                 copy_value.removeObject(to_remove) if to_remove
