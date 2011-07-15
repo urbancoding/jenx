@@ -21,7 +21,7 @@ Requirements
 Updates, Changelog & Feedback
 ------------
 
-* Beta 1: You can get it here [Jenx Beta1](http://urbancoding.github.com/jenx/jenx/versions/beta1/Jenx.dmg)
+* Beta 1: You can get it here [Jenx Beta1](http://urbancoding.github.com/jenx/versions/beta1/Jenx.dmg)
 	** You can ask question through email or submit a bug through GitHub
 Contact
 ------------
