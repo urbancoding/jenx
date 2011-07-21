@@ -18,6 +18,11 @@ class Jenx
         initialize_menu_ui_items
         register_observers
         
+        @old_default_build_status = ''
+        @new_default_build_status = ''
+        @old_sub_build_statuses   = {}
+        @new_sub_build_statuses   = {}
+        
         #Uncomment the following line to clear NSUserDefaults on each run.
         #Testing purposes only.
         #clear_nsdefaults
@@ -27,6 +32,7 @@ class Jenx
         @initial_load = true
         @editing_preferences = false
         @prefs = JenxPreferences.sharedInstance
+        @project_menu_count = @prefs.num_menu_projects == 0 ? @prefs.total_num_projects : @prefs.num_menu_projects
         @growl_center = JenxNotificationCenter.new(@prefs)
         init_jenx
     end
@@ -49,76 +55,79 @@ class Jenx
     end
     
     def fetch_current_build_status
-        @all_projects = JSON.parse(open(@prefs.build_server_url + JENX_API_URI).string)
-        NSLog("fetching current build status for #{@all_projects['jobs'].count} projects...")
+        @old_default_build_status = @new_default_build_status
+        @all_projects = JSON.parse(open("#{@prefs.build_server_url}#{JENX_API_URI}").string)
+        NSLog("fetching current build status for #{@prefs.total_num_projects} projects...")
         
-        default_project_status_color = nil
+        default_project_status_color = ''
         @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
+        @new_default_build_status = get_current_status_for(default_project_status_color)
         
-        @menu_default_project.setTitle("Project: " + @prefs.default_project)
-        @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
+        @menu_default_project.setTitle("Project: #{@prefs.default_project}")
+        @menu_default_project_status.setTitle("Status: #{@new_default_build_status}")
         @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
         
         @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
 
         load_projects
     rescue Exception => e
-        NSLog("error fetching build status: " + e.message + ". trying again..")
+        NSLog("error fetching build status: #{e.message}...")
     end
     
     def load_projects
-        project_menu_count = @prefs.num_menu_projects == 0 ? @prefs.total_num_projects : @prefs.num_menu_projects
+        @old_sub_build_statuses = @new_sub_build_statuses
         if @initial_load
-            NSLog("initial load of project menu items with " + project_menu_count.to_s + " projects...")
+            NSLog("initial load of project menu items with #{@project_menu_count} projects...")
             @all_projects['jobs'].each_with_index do |project, index|
-                if index < project_menu_count
+                if index < @project_menu_count
                     @jenx_item.menu.insertItem(project_menu_item(project, index), atIndex:index + JENX_STARTING_PROJECT_MENU_INDEX)
                 end
             end
             
-            @jenx_item.menu.insertItem(view_all_menu_item(project_menu_count), atIndex:project_menu_count + JENX_STARTING_PROJECT_MENU_INDEX)
+            growl_initial_status
+            
+            @jenx_item.menu.insertItem(view_all_menu_item(@project_menu_count), atIndex:@project_menu_count + JENX_STARTING_PROJECT_MENU_INDEX)
             
             @initial_load = false
         else
             NSLog("refreshing project menu items...")
             
             @all_projects['jobs'].each_with_index do |project, index| 
-                if index < project_menu_count
+                if index < @project_menu_count
                     project_menu_item = @jenx_item.menu.itemAtIndex(index + JENX_STARTING_PROJECT_MENU_INDEX)
                     project_menu_item.setImage(get_current_status_icon_for(project['color'], project_menu_item.image.name)) 
                 end
             end
         end
-        #present_build_status
+        
+        growl_update_status
     end
     
     def handle_broken_connection(error_type)
         @refresh_timer.invalidate
-        NSLog("#{CONNECTION_ERROR}: " + error_type)
+        NSLog("#{CONNECTION_ERROR}: #{error_type}")
         @jenx_item.setImage(@build_failure_icon)
         
-        @menu_default_project_status.title = "Status: ..."
+        @menu_default_project_status.setTitle("Status: ...")
         
         if error_type == ERROR_NO_INTERNET_CONNECTION
-            @menu_default_project.title = CANNOT_CONNECT_TO_INTERNET
-            @menu_default_project.toolTip = CANNOT_CONNECT_TO_INTERNET
-            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, "", CONNECTION_FAILURE)
+            @menu_default_project.setTitle(CANNOT_CONNECT_TO_INTERNET)
+            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_INTERNET)
+            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, nil, CONNECTION_FAILURE)
         else
-            @menu_default_project.title = CANNOT_CONNECT_TO_BUILD_SERVER
-            @menu_default_project.toolTip = CANNOT_CONNECT_TO_BUILD_SERVER
-            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, "", CONNECTION_FAILURE)
+            @menu_default_project.setTitle(CANNOT_CONNECT_TO_BUILD_SERVER)
+            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_BUILD_SERVER)
+            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, nil, CONNECTION_FAILURE)
         end
         
         clear_projects_from_menu
     end
     
     def clear_projects_from_menu
-        project_menu_count = (@prefs.num_menu_projects == 0 || @prefs.num_menu_projects.nil?) ? 3 : @prefs.num_menu_projects
-        
-        NSLog("clearing " + project_menu_count.to_s + " items from the menu if they exist...")
+        NSLog("clearing #{@project_menu_count} items from the menu if they exist...")
         
         begin
-            for i in 1..project_menu_count + 1
+            for i in 1..@project_menu_count + 1
                 @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
             end
         rescue Exception => e
@@ -131,7 +140,7 @@ class Jenx
     def create_timer
         time = @prefs.refresh_time == 0 ? 5 : @prefs.refresh_time
         
-        NSLog("create timer with refresh time of: " + time.to_s + " seconds...")
+        NSLog("create timer with refresh time of: #{time.to_s} seconds...")
         
         @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"init_jenx:", userInfo:nil, repeats:true)
     end
@@ -158,6 +167,118 @@ class Jenx
         PreferencesController.sharedController.showWindow(sender)
     end
     
+    def initialize_menu_ui_items
+        @app_icon = NSImage.imageNamed('app.tiff')
+        @connecting_icon = NSImage.imageNamed('connecting.tiff')
+        
+        @build_success_icon = NSImage.imageNamed('build_success.tiff')
+        @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
+        @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
+        
+        @jenx_success = NSImage.imageNamed('jenx_success.tiff')
+        @jenx_failure = NSImage.imageNamed('jenx_failure.tiff')
+        @jenx_issues = NSImage.imageNamed('jenx_issues.tiff')
+        
+        @status_bar = NSStatusBar.systemStatusBar
+        @jenx_item = @status_bar.statusItemWithLength(NSVariableStatusItemLength)
+        @jenx_item.setHighlightMode(true)
+        @jenx_item.setMenu(@menu)
+        @jenx_item.setImage(@connecting_icon)
+    end
+
+    def register_observers
+        notification_center = NSNotificationCenter.defaultCenter
+        
+        notification_center.addObserver(
+           self,
+           selector:"update_for_preferences:",
+           name:NOTIFICATION_PREFERENCES_UPDATED,
+           object:nil
+        )
+    end
+
+    def get_job_url_for(project)
+        "#{@prefs.build_server_url}/job/#{project}"
+    end
+
+    def get_current_status_icon_for(color, current_image)
+        case color.to_sym
+            when :red
+                @build_failure_icon
+            when :blue_anime
+                @build_initiated_icon
+            else
+                @app_icon
+        end
+    end
+    
+    def get_current_status_for(color)
+        if @prefs.default_project.empty?
+            "No default project set"
+        end
+        
+        case color.to_sym
+            when ""
+                "Could not retrieve status"
+            when :red
+                "Broken"
+            when :blue_anime
+                "Building"
+            else
+                "Stable"
+        end
+    end
+    
+    def growl_initial_status
+        passing_count = @new_sub_build_statuses.count - @new_sub_build_statuses.delete_if {|k,v| v != "red"}.count
+        notify_message = "#{passing_count} of #{@project_menu_count} other projects are passing."
+        case @new_default_build_status
+            when "Stable"
+                @growl_center.notify("#{@prefs.default_project} is passing!", notify_message, @jenx_success, BUILD_SUCCESS)
+            when "Broken"
+                @growl_center.notify("#{@prefs.default_project} is failing!", notify_message, @jenx_failure, BUILD_FAILURE)
+            else
+                @growl_center.notify("#{@prefs.default_project} is busy..", notify_message, @jenx_issues, BUILD_ISSUES)
+        end
+    end
+    
+    def growl_update_status
+        if @new_sub_build_statuses.delete_if {|k, v| @old_sub_build_statuses[k] == v}.count > 0 || @old_default_build_status != @new_default_build_status
+            passing_count = @new_sub_build_statuses.count - @new_sub_build_statuses.delete_if {|k,v| v != "red"}.count
+            notify_message = "#{passing_count} of #{@project_menu_count} other projects are passing."
+            case @default_project_current_status
+                when "Stable"
+                    @growl_center.notify("#{@prefs.default_project} is passing!", notify_message, @jenx_success, BUILD_SUCCESS)
+                when "Broken"
+                    @growl_center.notify("#{@prefs.default_project} is failing!", notify_message, @jenx_failure, BUILD_FAILURE)
+                else
+                    @growl_center.notify("#{@prefs.default_project} is busy..", notify_message, @jenx_issues, BUILD_ISSUES)
+            end
+        end
+    end
+
+    def project_menu_item(project, index)
+        @new_sub_build_statuses[project['name']] = project['color']
+        
+        project_menu_item = NSMenuItem.alloc.init
+        project_menu_item.setTitle(" #{project['name']}")
+        project_menu_item.setToolTip(get_job_url_for(project['name']))
+        project_menu_item.setEnabled(true)
+        project_menu_item.setIndentationLevel(1)
+        project_menu_item.setImage(get_current_status_icon_for(project['color'], nil))
+        project_menu_item.setAction("open_web_interface_for:")
+        project_menu_item.setTag(index + 1)
+    end
+
+    def view_all_menu_item(project_menu_count)
+        view_all_menu_item = NSMenuItem.alloc.init
+        view_all_menu_item.setTitle("View all projects..")
+        view_all_menu_item.setToolTip(@prefs.build_server_url)
+        view_all_menu_item.setIndentationLevel(1)
+        view_all_menu_item.setAction("open_web_interface_for:")
+        view_all_menu_item.setTag(project_menu_count + 1)
+    end
+    
     #testing purposes only
     def clear_nsdefaults
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_TOTAL_NUM_PROJECTS)
@@ -166,88 +287,4 @@ class Jenx
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_REFRESH_TIME_INTERVAL)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_MAX_PROJECTS_TO_SHOW)
     end
-    
-    private
-    
-        def initialize_menu_ui_items
-            @app_icon = NSImage.imageNamed('app.tiff')
-            @connecting_icon = NSImage.imageNamed('connecting.tiff')
-            
-            @build_success_icon = NSImage.imageNamed('build_success.tiff')
-            @build_failure_icon = NSImage.imageNamed('build_failure.tiff')
-            @build_initiated_icon = NSImage.imageNamed('build_initiated.tiff')
-            
-            @jenx_success = NSImage.imageNamed('jenx_success.tiff')
-            @jenx_failure = NSImage.imageNamed('jenx_failure.tiff')
-            @jenx_issues = NSImage.imageNamed('jenx_yield.tiff')
-            
-            @status_bar = NSStatusBar.systemStatusBar
-            @jenx_item = @status_bar.statusItemWithLength(NSVariableStatusItemLength)
-            @jenx_item.setHighlightMode(true)
-            @jenx_item.setMenu(@menu)
-            @jenx_item.setImage(@connecting_icon)
-        end
-    
-        def register_observers
-            notification_center = NSNotificationCenter.defaultCenter
-            
-            notification_center.addObserver(
-               self,
-               selector:"update_for_preferences:",
-               name:NOTIFICATION_PREFERENCES_UPDATED,
-               object:nil
-            )
-        end
-    
-        def get_job_url_for(project)
-            "#{@prefs.build_server_url}/job/#{project}"
-        end
-    
-        def get_current_status_icon_for(color, current_image)
-            case color.to_sym
-                when :red
-                    @build_failure_icon
-                when :blue_anime
-                    @build_initiated_icon
-                else
-                    @app_icon
-            end
-        end
-        
-        def get_current_status_for(color)
-            if @prefs.default_project.empty?
-                "No default project set"
-            end
-            
-            case color.to_sym
-                when ""
-                    "Could not retrieve status"
-                when :red
-                    "Broken"
-                when :blue_anime
-                    "Building"
-                else
-                    "Stable"
-            end
-        end
-    
-        def project_menu_item(project, index)
-            project_menu_item = NSMenuItem.alloc.init
-            project_menu_item.setTitle(" " + project['name'])
-            project_menu_item.setToolTip(get_job_url_for(project['name']))
-            project_menu_item.setEnabled(true)
-            project_menu_item.setIndentationLevel(1)
-            project_menu_item.setImage(get_current_status_icon_for(project['color'], nil))
-            project_menu_item.setAction("open_web_interface_for:")
-            project_menu_item.setTag(index + 1)
-        end
-    
-        def view_all_menu_item(project_menu_count)
-            view_all_menu_item = NSMenuItem.alloc.init
-            view_all_menu_item.setTitle("View all projects..")
-            view_all_menu_item.setToolTip(@prefs.build_server_url)
-            view_all_menu_item.setIndentationLevel(1)
-            view_all_menu_item.setAction("open_web_interface_for:")
-            view_all_menu_item.setTag(project_menu_count + 1)
-        end
 end

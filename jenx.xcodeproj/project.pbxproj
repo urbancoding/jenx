@@ -21,7 +21,7 @@
 		96803B8B1384CA3B00D5DD90 /* build_initiated.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */; };
 		96803B8E1384CB4000D5DD90 /* app.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8C1384CB4000D5DD90 /* app.tiff */; };
 		96803B8F1384CB4000D5DD90 /* build_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8D1384CB4000D5DD90 /* build_failure.tiff */; };
-		9683417013CE969E003667B5 /* jenx_yield.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9683416F13CE969E003667B5 /* jenx_yield.tiff */; };
+		9683417013CE969E003667B5 /* jenx_issues.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9683416F13CE969E003667B5 /* jenx_issues.tiff */; };
 		96B6FD0113860BB8009C1021 /* PreferencesGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0013860BB8009C1021 /* PreferencesGeneralView.xib */; };
 		96B6FD0413860F95009C1021 /* PreferencesGeneralViewController.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0313860F95009C1021 /* PreferencesGeneralViewController.rb */; };
 		96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0513861B97009C1021 /* PreferencesController.rb */; };
@@ -66,7 +66,7 @@
 		96803B8A1384CA3B00D5DD90 /* build_initiated.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_initiated.tiff; path = images/build_initiated.tiff; sourceTree = "<group>"; };
 		96803B8C1384CB4000D5DD90 /* app.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = app.tiff; path = images/app.tiff; sourceTree = "<group>"; };
 		96803B8D1384CB4000D5DD90 /* build_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_failure.tiff; path = images/build_failure.tiff; sourceTree = "<group>"; };
-		9683416F13CE969E003667B5 /* jenx_yield.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_yield.tiff; path = images/jenx_yield.tiff; sourceTree = "<group>"; };
+		9683416F13CE969E003667B5 /* jenx_issues.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_issues.tiff; path = images/jenx_issues.tiff; sourceTree = "<group>"; };
 		96B6FD0013860BB8009C1021 /* PreferencesGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesGeneralView.xib; sourceTree = "<group>"; };
 		96B6FD0313860F95009C1021 /* PreferencesGeneralViewController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreferencesGeneralViewController.rb; sourceTree = "<group>"; };
 		96B6FD0513861B97009C1021 /* PreferencesController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreferencesController.rb; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		96803B891384CA0600D5DD90 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				9683416F13CE969E003667B5 /* jenx_yield.tiff */,
+				9683416F13CE969E003667B5 /* jenx_issues.tiff */,
 				96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */,
 				96512B7013CBE2610028D5A8 /* jenx_success.tiff */,
 				9654D81F13CAD9AD00FC2602 /* jenx.icns */,
@@ -312,7 +312,7 @@
 				96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */,
 				96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */,
 				96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */,
-				9683417013CE969E003667B5 /* jenx_yield.tiff in Resources */,
+				9683417013CE969E003667B5 /* jenx_issues.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

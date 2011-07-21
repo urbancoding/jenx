@@ -23,6 +23,7 @@ class JenxNotificationCenter
     end
 
     def notify(title, message, image, notification_name)
+        image_data = image.nil? ? "" : image.TIFFRepresentation
         if @preferences.enable_growl?
             NSLog("Sending growl notification - Title: " + title + ", Message: " + message + ", Notification Name: " + notification_name)
             
@@ -31,7 +32,7 @@ class JenxNotificationCenter
                                title,
                                description: message,
                                notificationName: notification_name,
-                               iconData: image,
+                               iconData: image_data,
                                priority: 0,
                                isSticky: false,
                                clickContext: title

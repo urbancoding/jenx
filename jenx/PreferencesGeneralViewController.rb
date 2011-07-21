@@ -40,13 +40,14 @@ class PreferencesGeneralViewController <  NSViewController
             @enable_growl.state = @prefs.enable_growl? ? NSOnState : NSOffState
             @launch_at_login.state = @prefs.launch_at_login? ? NSOnState : NSOffState
             
-            load_projects(nil)
+            load_projects
         rescue Exception => e
             NSLog(e.message)
         end
     end
     
-    def load_projects(sender)
+    def load_projects(sender=nil)
+        @project_list.removeAllItems
         begin
             url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
             @all_projects = JSON.parse(open(url + JENX_API_URI).string)

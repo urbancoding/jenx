@@ -46,6 +46,7 @@
 						<reference key="NSMenu" ref="248325755"/>
 						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
+						<int key="NSKeyEquivModMask">131072</int>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<object class="NSCustomResource" key="NSOnImage" id="804739329">
 							<string key="NSClassName">NSImage</string>
