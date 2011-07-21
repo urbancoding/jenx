@@ -7,49 +7,55 @@
 #
 
 class Jenx
-    attr_accessor :menu 
+    attr_accessor :menu
+    attr_accessor :menu_jenx_status
     attr_accessor :menu_default_project
     attr_accessor :menu_default_project_status
     attr_accessor :menu_default_project_update_time
     
     def awakeFromNib
-        initialize_menu_ui_items
-        
-        @initial_load = true
-        @editing_preferences = false
-
         JenxPreferences::setup_defaults
-        @preferences = JenxPreferences.sharedInstance
-        @growl_center = JenxNotificationCenter.new(@preferences)
-        
+        initialize_menu_ui_items
         register_observers
+        
+        #Uncomment the following line to clear NSUserDefaults on each run.
+        #Testing purposes only.
+        #clear_nsdefaults
     end
     
-    def init_jenx(sender)
-        if @preferences.first_jenx_run? || @preferences.are_invalid?
+    def applicationDidFinishLaunching(notification)
+        @initial_load = true
+        @editing_preferences = false
+        @prefs = JenxPreferences.sharedInstance
+        @growl_center = JenxNotificationCenter.new(@prefs)
+        init_jenx
+    end
+    
+    def init_jenx(sender=nil)
+        if @prefs.are_invalid?
+            NSLog("showing preferences because invalid")
             show_preferences_window(nil)
         else
-            ensure_connection(nil) 
+            ensure_connection
         end
     end
     
-    def ensure_connection(sender)
-        NSLog("Checking connection...")
-        @initial_load ? @menu_default_project.setTitle("Refreshing...") : @menu_default_project.setTitle("Connecting...")
+    def ensure_connection(sender=nil)
+        NSLog("ensuring connection...")
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
         end
-        JenxConnection.new(@preferences.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
+        JenxConnection.new(@prefs.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
     end
     
     def fetch_current_build_status
-        @all_projects = JSON.parse(open(@preferences.build_server_url + JENX_API_URI).string)
-        NSLog("Fetching current build status for #{@all_projects['jobs'].count} projects...")
+        @all_projects = JSON.parse(open(@prefs.build_server_url + JENX_API_URI).string)
+        NSLog("fetching current build status for #{@all_projects['jobs'].count} projects...")
         
         default_project_status_color = nil
-        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@preferences.default_project.downcase)}
+        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
         
-        @menu_default_project.setTitle("Project: " + @preferences.default_project)
+        @menu_default_project.setTitle("Project: " + @prefs.default_project)
         @menu_default_project_status.setTitle("Status: " + get_current_status_for(default_project_status_color))
         @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
         
@@ -57,13 +63,13 @@ class Jenx
 
         load_projects
     rescue Exception => e
-        NSLog("Error while fetching build status for " + @preferences.default_project + ": " + e.message)
+        NSLog("error fetching build status: " + e.message + ". trying again..")
     end
     
     def load_projects
-        project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
+        project_menu_count = @prefs.num_menu_projects == 0 ? @prefs.total_num_projects : @prefs.num_menu_projects
         if @initial_load
-            NSLog("Initial load of project menu items with " + project_menu_count.to_s + " projects...")
+            NSLog("initial load of project menu items with " + project_menu_count.to_s + " projects...")
             @all_projects['jobs'].each_with_index do |project, index|
                 if index < project_menu_count
                     @jenx_item.menu.insertItem(project_menu_item(project, index), atIndex:index + JENX_STARTING_PROJECT_MENU_INDEX)
@@ -74,7 +80,7 @@ class Jenx
             
             @initial_load = false
         else
-            NSLog("Refreshing project menu items...")
+            NSLog("refreshing project menu items...")
             
             @all_projects['jobs'].each_with_index do |project, index| 
                 if index < project_menu_count
@@ -91,13 +97,15 @@ class Jenx
         NSLog("#{CONNECTION_ERROR}: " + error_type)
         @jenx_item.setImage(@build_failure_icon)
         
+        @menu_default_project_status.title = "Status: ..."
+        
         if error_type == ERROR_NO_INTERNET_CONNECTION
-            @menu_default_project.setTitle(CANNOT_CONNECT_TO_INTERNET)
-            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_INTERNET)
+            @menu_default_project.title = CANNOT_CONNECT_TO_INTERNET
+            @menu_default_project.toolTip = CANNOT_CONNECT_TO_INTERNET
             @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, "", CONNECTION_FAILURE)
         else
-            @menu_default_project.setTitle(CANNOT_CONNECT_TO_BUILD_SERVER)
-            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_BUILD_SERVER)
+            @menu_default_project.title = CANNOT_CONNECT_TO_BUILD_SERVER
+            @menu_default_project.toolTip = CANNOT_CONNECT_TO_BUILD_SERVER
             @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, "", CONNECTION_FAILURE)
         end
         
@@ -105,27 +113,35 @@ class Jenx
     end
     
     def clear_projects_from_menu
-        project_menu_count = (@preferences.num_menu_projects == 0 || @preferences.num_menu_projects.nil?) ? 3 : @preferences.num_menu_projects
+        project_menu_count = (@prefs.num_menu_projects == 0 || @prefs.num_menu_projects.nil?) ? 3 : @prefs.num_menu_projects
         
-        NSLog("Clearing " + project_menu_count.to_s + " items from the menu if they exist...")
+        NSLog("clearing " + project_menu_count.to_s + " items from the menu if they exist...")
         
-        for i in 1..project_menu_count + 1
-            @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
+        begin
+            for i in 1..project_menu_count + 1
+                @jenx_item.menu.removeItem(@jenx_item.menu.itemWithTag(i)) if @jenx_item.menu.itemWithTag(i)
+            end
+        rescue Exception => e
+            NSLog(e.message)
         end
+        
+        NSLog("finished clearing")
     end
     
     def create_timer
-        time = (@preferences.refresh_time == 0) ? 5 : @preferences.refresh_time
-        NSLog("Create timer with refresh_time of: " + time.to_s + " seconds...")
-        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"ensure_connection:", userInfo:nil, repeats:true)
+        time = @prefs.refresh_time == 0 ? 5 : @prefs.refresh_time
+        
+        NSLog("create timer with refresh time of: " + time.to_s + " seconds...")
+        
+        @refresh_timer = NSTimer.scheduledTimerWithTimeInterval(time, target:self, selector:"init_jenx:", userInfo:nil, repeats:true)
     end
     
     def update_for_preferences(sender)
-        NSLog("Preferences saved, recreating timer...")
+        NSLog("preferences saved, recreating timer...")
         @editing_preferences = false
         @initial_load = true
         
-        ensure_connection(nil)
+        init_jenx
     end
     
     def open_web_interface_for(sender)
@@ -140,6 +156,15 @@ class Jenx
         clear_projects_from_menu
         NSApplication.sharedApplication.activateIgnoringOtherApps(true)
         PreferencesController.sharedController.showWindow(sender)
+    end
+    
+    #testing purposes only
+    def clear_nsdefaults
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_TOTAL_NUM_PROJECTS)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_BUILD_SERVER_URL)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_DEFAULT_PROJECT)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_REFRESH_TIME_INTERVAL)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_MAX_PROJECTS_TO_SHOW)
     end
     
     private
@@ -165,12 +190,6 @@ class Jenx
     
         def register_observers
             notification_center = NSNotificationCenter.defaultCenter
-            notification_center.addObserver(
-               self,
-               selector:"init_jenx:",
-               name:NSApplicationDidFinishLaunchingNotification,
-               object:nil
-            )
             
             notification_center.addObserver(
                self,
@@ -181,7 +200,7 @@ class Jenx
         end
     
         def get_job_url_for(project)
-            "#{@preferences.build_server_url}/job/#{project}"
+            "#{@prefs.build_server_url}/job/#{project}"
         end
     
         def get_current_status_icon_for(color, current_image)
@@ -196,7 +215,7 @@ class Jenx
         end
         
         def get_current_status_for(color)
-            if @preferences.default_project.empty?
+            if @prefs.default_project.empty?
                 "No default project set"
             end
             
@@ -226,32 +245,9 @@ class Jenx
         def view_all_menu_item(project_menu_count)
             view_all_menu_item = NSMenuItem.alloc.init
             view_all_menu_item.setTitle("View all projects..")
-            view_all_menu_item.setToolTip(@preferences.build_server_url)
+            view_all_menu_item.setToolTip(@prefs.build_server_url)
             view_all_menu_item.setIndentationLevel(1)
             view_all_menu_item.setAction("open_web_interface_for:")
             view_all_menu_item.setTag(project_menu_count + 1)
         end
-    
-        #def present_build_status
-        #        num_failed_projects = @build_status_all_projects.count
-        #        
-        #        case @build_status_default_project.to_sym
-        #            when :red
-        #                if (num_failed_projects != @preferences.num_menu_projects && num_failed_projects > 0)
-        #                    @growl_center.notify(@preferences.default_project + " has failed", "You also have #{num_failed_projects} project(s) that are failing.", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
-        #                else if (num_failed_projects == @preferences.num_menu_projects)
-        #                    @growl_center.notify(BUILD_FAILURE, "All projects are failing.", @jenx_failure.TIFFRepresentation, BUILD_FAILURE)
-        #                end
-        #            end
-        #            when :blue
-        #                if (num_failed_projects != @preferences.num_menu_projects && num_failed_projects > 0)
-        #                    @growl_center.notify(@preferences.default_project + " has passed", "Although, #{num_failed_projects} project(s) are failing.", @jenx_issues.TIFFRepresentation, BUILD_ISSUES)
-        #                else if (num_failed_projects == @preferences.num_menu_projects)
-        #                    @growl_center.notify(@preferences.default_project + " has passed", "Although, all other projects are failing.", @jenx_issues.TIFFRepresentation, BUILD_ISSUES)
-        #                else
-        #                    @growl_center.notify(BUILD_SUCCESS, "All projects are passing!", @jenx_success.TIFFRepresentation, BUILD_SUCCESS)
-        #                end
-        #            end
-        #        end
-        #    end
 end

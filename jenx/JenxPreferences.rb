@@ -18,12 +18,12 @@ class JenxPreferences
         self
     end
 
-    def first_jenx_run?
-        NSUserDefaults.standardUserDefaults.boolForKey(PREFERENCES_JENX_INITIAL_LOAD)
+    def total_num_projects
+        NSUserDefaults.standardUserDefaults.integerForKey(PREFERENCES_TOTAL_NUM_PROJECTS)
     end
 
-    def first_jenx_run=(val)
-        NSUserDefaults.standardUserDefaults.setObject(val, forKey:PREFERENCES_JENX_INITIAL_LOAD)
+    def total_num_projects=(val)
+        NSUserDefaults.standardUserDefaults.setInteger(val, forKey:PREFERENCES_TOTAL_NUM_PROJECTS)
         NSUserDefaults.standardUserDefaults.synchronize
     end
 
@@ -81,7 +81,7 @@ class JenxPreferences
     end
 
     def are_invalid?
-        build_server_url.empty? || default_project.empty?
+        build_server_url.nil? || default_project.nil? || refresh_time.nil? || num_menu_projects.nil?
     end
 
     class << self

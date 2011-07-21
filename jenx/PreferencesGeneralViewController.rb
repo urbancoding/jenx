@@ -31,40 +31,50 @@ class PreferencesGeneralViewController <  NSViewController
     
     def loadView
         super
-        @preferences = JenxPreferences.sharedInstance
-        
-        @server_url.stringValue = @preferences.build_server_url
-        @refresh_time.intValue = @preferences.refresh_time
-        @num_menu_projects.intValue = @preferences.num_menu_projects
-        @enable_growl.state = @preferences.enable_growl? ? NSOnState : NSOffState
-        @launch_at_login.state = @preferences.launch_at_login? ? NSOnState : NSOffState
-        
-        load_projects(nil)
+        begin
+            @prefs = JenxPreferences.sharedInstance
+            
+            @server_url.stringValue = (@prefs.build_server_url.nil? || @prefs.build_server_url.eql?('')) ? '' : @prefs.build_server_url
+            @refresh_time.intValue = (@prefs.refresh_time.nil? || @prefs.refresh_time.eql?('')) ? 0 : @prefs.refresh_time
+            @num_menu_projects.intValue = (@prefs.num_menu_projects.nil? || @prefs.num_menu_projects.eql?('')) ? 0 : @prefs.num_menu_projects
+            @enable_growl.state = @prefs.enable_growl? ? NSOnState : NSOffState
+            @launch_at_login.state = @prefs.launch_at_login? ? NSOnState : NSOffState
+            
+            load_projects(nil)
+        rescue Exception => e
+            NSLog(e.message)
+        end
     end
     
     def load_projects(sender)
-        @all_projects = JSON.parse(open(@server_url.stringValue + JENX_API_URI).string)
-        
-        @all_projects['jobs'].each do |project|
-            @project_list.addItemWithObjectValue(project['name'])
-        end
-        
-        if !@preferences.default_project
-            @project_list.selectItemWithObjectValue(0)
-        else
-            @project_list.selectItemWithObjectValue(@preferences.default_project)
+        begin
+            url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
+            @all_projects = JSON.parse(open(url + JENX_API_URI).string)
+            
+            @all_projects['jobs'].each do |project|
+                @project_list.addItemWithObjectValue(project['name'])
+            end
+            
+            if !@prefs.default_project
+                @project_list.selectItemWithObjectValue(0)
+            else
+                @project_list.selectItemWithObjectValue(@prefs.default_project)
+            end
+        rescue InvalidURIError => uri_error
+            NSLog(uri_error)
+        rescue Exception => error
+            NSLog(error)
         end
     end
     
     def save_preferences(sender)
-        @preferences.build_server_url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
-        @preferences.default_project = @project_list.objectValueOfSelectedItem
-        @preferences.refresh_time = @refresh_time.intValue
-        @preferences.num_menu_projects = @num_menu_projects.intValue
-        @preferences.enable_growl = (@enable_growl.state == NSOnState)
-        @preferences.launch_at_login = (@launch_at_login.state == NSOnState)
-        
-        @preferences.first_jenx_run = false;
+        @prefs.total_num_projects = @all_projects.count
+        @prefs.build_server_url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
+        @prefs.default_project = @project_list.objectValueOfSelectedItem
+        @prefs.refresh_time = @refresh_time.intValue
+        @prefs.num_menu_projects = @num_menu_projects.intValue
+        @prefs.enable_growl = (@enable_growl.state == NSOnState)
+        @prefs.launch_at_login = (@launch_at_login.state == NSOnState)
         
         NSNotificationCenter.defaultCenter.postNotificationName(NOTIFICATION_PREFERENCES_UPDATED, object:self)
         
