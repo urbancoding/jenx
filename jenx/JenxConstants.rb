@@ -29,9 +29,10 @@ NOTIFICATION_PREFERENCES_UPDATED = "preferences_updated"
 #errors
 ERROR_NO_INTERNET_CONNECTION = "no_internet_connection"
 ERROR_SERVER_CANNOT_BE_CONTACTED = "server cannot be contacted"
-CONNECTION_ERROR = "connection error"
-CANNOT_CONNECT_TO_BUILD_SERVER = "Connection to build server cannot be established."
-CANNOT_CONNECT_TO_INTERNET = "Internet connection cannot be established."
+CONNECTION_ERROR_TITLE = "Connection Error"
+CONNECTION_ERROR_MESSAGE = "Cannot connect to build server."
+CANNOT_CONNECT = "Jenx Status: Not Connected"
+CONNECTED = "Jenx Status: Connected"
 
 #growl notification types
 CONNECTION_FAILURE = "Connection Failure"

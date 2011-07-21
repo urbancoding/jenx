@@ -63,6 +63,9 @@ class Jenx
         @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
         @new_default_build_status = get_current_status_for(default_project_status_color)
         
+        jenx_status_item = @jenx_item.menu.itemAtIndex(0)
+        jenx_status_item.setTitle(CONNECTED)
+        
         @menu_default_project.setTitle("Project: #{@prefs.default_project}")
         @menu_default_project_status.setTitle("Status: #{@new_default_build_status}")
         @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
@@ -105,20 +108,14 @@ class Jenx
     
     def handle_broken_connection(error_type)
         @refresh_timer.invalidate
-        NSLog("#{CONNECTION_ERROR}: #{error_type}")
+        NSLog("#{CONNECTION_ERROR_TITLE}: #{error_type}")
         @jenx_item.setImage(@build_failure_icon)
         
-        @menu_default_project_status.setTitle("Status: ...")
-        
-        if error_type == ERROR_NO_INTERNET_CONNECTION
-            @menu_default_project.setTitle(CANNOT_CONNECT_TO_INTERNET)
-            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_INTERNET)
-            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_INTERNET, nil, CONNECTION_FAILURE)
-        else
-            @menu_default_project.setTitle(CANNOT_CONNECT_TO_BUILD_SERVER)
-            @menu_default_project.setToolTip(CANNOT_CONNECT_TO_BUILD_SERVER)
-            @growl_center.notify(CONNECTION_ERROR, CANNOT_CONNECT_TO_BUILD_SERVER, nil, CONNECTION_FAILURE)
-        end
+        jenx_status_item = @jenx_item.menu.itemAtIndex(0)
+    
+        jenx_status_item.setTitle(CANNOT_CONNECT)
+        jenx_status_item.setToolTip(CANNOT_CONNECT)
+        @growl_center.notify(CONNECTION_ERROR_TITLE, CONNECTION_ERROR_MESSAGE, nil, CONNECTION_FAILURE)
         
         clear_projects_from_menu
     end
@@ -184,6 +181,13 @@ class Jenx
         @jenx_item.setHighlightMode(true)
         @jenx_item.setMenu(@menu)
         @jenx_item.setImage(@connecting_icon)
+        
+        jenx_status_item = @jenx_item.menu.itemAtIndex(0)
+        jenx_status_item.setTitle(CONNECTED)
+        
+        @menu_default_project.setTitle("Project: ...")
+        @menu_default_project_status.setTitle("Status: ...")
+        @menu_default_project_update_time.setTitle("Last Update: ...")
     end
 
     def register_observers
