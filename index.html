@@ -89,7 +89,7 @@
 		var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 		function setTime() {
 			var d = new Date(),
-				minutes = d.getMinutes(),
+				minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes(),
 				timeOfDay = d.getHours() > 12 ? "PM" : "AM",
 				hours = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
 				day = days[d.getDay()];
