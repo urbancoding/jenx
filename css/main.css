@@ -5,13 +5,13 @@ body {
 }
 
 h1 { 
-  font-family: "Pompiere", sans-serif;
+  font-family: "Pompiere", "Trebuchet MS", sans-serif;
   font-size: 56px;
   color: #652e05;
 }
 
 h2 { 
-  font-family: "Pompiere", sans-serif;
+  font-family: "Pompiere", "Trebuchet MS", sans-serif;
   font-size: 24px;
 }
 
@@ -90,7 +90,6 @@ a {
    
 .header { 
   background: url("../images/butler-culpeo-fox.png") 0 30px no-repeat;
-  height: 500px;
   margin-bottom: 20px;
   padding-top: 24px;
   position: relative;
@@ -133,7 +132,7 @@ a {
         background-image: url("../images/download.png");
         background-position: 5px 18px;
         background-repeat: no-repeat;
-        font-family: "Pompiere", sans-serif;
+        font-family: "Pompiere", "Trebuchet MS", sans-serif;
         padding-left: 50px;
         padding-right: 25px;
         margin-bottom: 5px;
@@ -149,6 +148,7 @@ a {
     }
     
 .details {
+  clear:both;
   margin-bottom: 20px;
   border-top: 1px solid #aaaaaa;
   border-bottom: 1px solid #aaaaaa;
