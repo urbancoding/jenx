@@ -4,13 +4,7 @@ A Jenkins build server monitor for Mac OS X
 
 Jenx is written in MacRuby and has these features:
 
-![screenshot](http://urbancoding.github.com/jenx/images/menu.png)
-
-* Show current build status for default project in system menu bar.
-* Show all projects with build notification icon within action menu.
-* Ability to click and open web view of projects
-
-![screenshot](http://urbancoding.github.com/jenx/images/preferences.png)
+Landing page with screenshots: [Jenx](http://urbancoding.github.com/jenx/)
 
 Requirements
 ------------
@@ -27,8 +21,10 @@ Updates, Changelog & Feedback
 Contact
 ------------
 
-Email: jenx.monitor@gmail.com
-Hop into the IRC channel: [#jenx](irc://freenode/jenx)
+* Email: jenx.monitor@gmail.com
+* Hop into the IRC channel: [#jenx](irc://freenode/jenx)
+* Watch for updates on Twitter: @jenx_monitor
+* Ask me questions on Twitter: @tkocurek
 
 Contributing
 ------------
