@@ -7,13 +7,15 @@
 #
 
 #global
-JENX_API_URI = "api/json"
+JENX_API_URI = "/api/json"
 JENX_STARTING_PROJECT_MENU_INDEX = 9
 JENX_REFRESH_TIME_INTERVAL = 10.0 #seconds
 
 #preferences
 PREFERENCES_TOTAL_NUM_PROJECTS = "total_num_projects"
 PREFERENCES_BUILD_SERVER_URL = "build_server_url"
+PREFERENCES_BUILD_SERVER_USERNAME = "build_server_username"
+PREFERENCES_BUILD_SERVER_PASSWORD = "build_server_password"
 PREFERENCES_DEFAULT_PROJECT = "default_project"
 PREFERENCES_MAX_PROJECTS_TO_SHOW = "max_project_to_show"
 PREFERENCES_REFRESH_TIME_INTERVAL = "refresh_time_interval"
