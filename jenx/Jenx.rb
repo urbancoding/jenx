@@ -51,12 +51,12 @@ class Jenx
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
         end
-        JenxConnection.new(@prefs.build_server_url).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
+        JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
     end
     
     def fetch_current_build_status
         @old_default_build_status = @new_default_build_status
-        @all_projects = JSON.parse(open("#{@prefs.build_server_url}#{JENX_API_URI}").string)
+        @all_projects =  JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).all_projects
         NSLog("fetching current build status for #{@prefs.total_num_projects} projects...")
         
         default_project_status_color = ''

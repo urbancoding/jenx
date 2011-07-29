@@ -8,6 +8,8 @@
 
 class PreferencesGeneralViewController <  NSViewController
     attr_accessor :server_url
+    attr_accessor :username
+    attr_accessor :password
     attr_accessor :project_list
     attr_accessor :connection_spinner
     attr_accessor :connection_label
@@ -39,7 +41,8 @@ class PreferencesGeneralViewController <  NSViewController
             @num_menu_projects.intValue = (@prefs.num_menu_projects.nil? || @prefs.num_menu_projects.eql?('')) ? 0 : @prefs.num_menu_projects
             @enable_growl.state = @prefs.enable_growl? ? NSOnState : NSOffState
             @launch_at_login.state = @prefs.launch_at_login? ? NSOnState : NSOffState
-            
+            @username.stringValue = (@prefs.username.nil?) ? '' : @prefs.username
+            @password.stringValue = (@prefs.password.nil?) ? '' : @prefs.password
             load_projects
         rescue Exception => e
             NSLog(e.message)
@@ -50,8 +53,7 @@ class PreferencesGeneralViewController <  NSViewController
         @project_list.removeAllItems
         begin
             url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
-            @all_projects = JSON.parse(open(url + JENX_API_URI).string)
-            
+            @all_projects =  JenxConnection.new(url, @username.stringValue, @password.stringValue).all_projects
             @all_projects['jobs'].each do |project|
                 @project_list.addItemWithObjectValue(project['name'])
             end
@@ -71,6 +73,8 @@ class PreferencesGeneralViewController <  NSViewController
     def save_preferences(sender)
         @prefs.total_num_projects = @all_projects.count
         @prefs.build_server_url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
+        @prefs.username = @username.stringValue
+        @prefs.password = @password.stringValue
         @prefs.default_project = @project_list.objectValueOfSelectedItem
         @prefs.refresh_time = @refresh_time.intValue
         @prefs.num_menu_projects = @num_menu_projects.intValue

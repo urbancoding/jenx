@@ -14,7 +14,7 @@ framework 'Growl'
 require 'rubygems'
 require 'json'
 require 'timeout'
-require 'net/http'
+require 'net/https'
 require 'open-uri'
 
 # Loading all the Ruby project files.

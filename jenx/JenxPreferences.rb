@@ -84,6 +84,25 @@ class JenxPreferences
         build_server_url.nil? || default_project.nil? || refresh_time.nil? || num_menu_projects.nil?
     end
 
+    def username
+        NSUserDefaults.standardUserDefaults.stringForKey(PREFERENCES_BUILD_SERVER_USERNAME)
+    end
+
+    def username=(val)
+        NSUserDefaults.standardUserDefaults.setObject(val, forKey:PREFERENCES_BUILD_SERVER_USERNAME)
+        NSUserDefaults.standardUserDefaults.synchronize
+    end
+
+    def password
+        NSUserDefaults.standardUserDefaults.stringForKey(PREFERENCES_BUILD_SERVER_PASSWORD)
+    end
+
+    def password=(val)
+        NSUserDefaults.standardUserDefaults.setObject(val, forKey:PREFERENCES_BUILD_SERVER_PASSWORD)
+        NSUserDefaults.standardUserDefaults.synchronize
+    end
+
+
     class << self
         def setup_defaults
             NSUserDefaults.standardUserDefaults.registerDefaults(
