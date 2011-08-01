@@ -20,8 +20,17 @@ Contact
 * Hop into the IRC channel: [#jenx](irc://freenode/jenx)
 * Watch for updates or ask questions on Twitter: @jenx_monitor
 
+Contributors
+------------
+
+Roman Dmytrenko (erka)
+
+* brought ssl and basic auth to Jenx
+
+
 Contributing
 ------------
+
 **Everyone** is encouraged to help improve this project.
 
 Here are some ways *you* can contribute:
