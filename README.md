@@ -1,10 +1,8 @@
-# Jenx #
+# [Jenx](http://urbancoding.github.com/jenx/) #
 
 A Jenkins build server monitor for Mac OS X
 
 Jenx is written in MacRuby and has these features:
-
-Landing page with screenshots: [Jenx](http://urbancoding.github.com/jenx/)
 
 Requirements
 ------------
@@ -15,16 +13,14 @@ Requirements
 Updates, Changelog & Feedback
 ------------
 
-* Beta 1: You can get it here [Jenx Beta1](http://urbancoding.github.com/jenx/versions/beta1/Jenx.dmg)
-* You can ask question through email or submit a bug through GitHub
+* The beta release can be downloaded here [Jenx](http://urbancoding.github.com/jenx/)
 
 Contact
 ------------
 
-* Email: jenx.monitor@gmail.com
+* Email: jenx@urbancoding.net
 * Hop into the IRC channel: [#jenx](irc://freenode/jenx)
-* Watch for updates on Twitter: @jenx_monitor
-* Ask me questions on Twitter: @tkocurek
+* Watch for updates or ask questions on Twitter: @jenx_monitor
 
 Contributing
 ------------
