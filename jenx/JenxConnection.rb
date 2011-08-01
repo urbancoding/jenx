@@ -7,7 +7,7 @@
 #
 
 class JenxConnection
-    def initialize(url, username, password)
+    def initialize(url, username = nil, password = nil)
         @url = url
         @username = username
         @password = password
@@ -15,15 +15,15 @@ class JenxConnection
     end
 
     def auth(req)
-        req.basic_auth @username, @password unless @username.nil?
+        req.basic_auth @username, @password unless @username.nil? or @username.empty?
     end
 
-	def initSSL(http, scheme)
+    def initSSL(http, scheme)
         if scheme == "https" then
             http.use_ssl = true
             http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
-	end
+    end
 
     def all_projects
         connection_result = JenxConnectionManager.new do
@@ -33,8 +33,10 @@ class JenxConnection
             req = Net::HTTP::Get.new(JENX_API_URI)
             auth(req)
             response = http.request(req)
-            result = response.body
-            JSON.parse(result)
+            if response.code_type == Net::HTTPOK then
+                result = response.body
+                JSON.parse(result)
+            end
         end
         connection_result.value
     end
@@ -45,7 +47,9 @@ class JenxConnection
             http = Net::HTTP.new(uri.host, uri.port)
             initSSL(http, uri.scheme)
             req = Net::HTTP::Head.new(JENX_API_URI)
-            result = http.request(req)
+            auth(req)
+            response = http.request(req)
+            response.code_type == Net::HTTPOK
         end
         connection_result.value
     end
