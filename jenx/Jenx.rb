@@ -287,6 +287,8 @@ class Jenx
     def clear_nsdefaults
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_TOTAL_NUM_PROJECTS)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_BUILD_SERVER_URL)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_BUILD_SERVER_USERNAME)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_BUILD_SERVER_PASSWORD)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_DEFAULT_PROJECT)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_REFRESH_TIME_INTERVAL)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(PREFERENCES_MAX_PROJECTS_TO_SHOW)
