@@ -1,0 +1,106 @@
+<html>
+<head>
+	<script type="text/javascript"src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<link href="css/reset.css" rel="stylesheet" type="text/css"/>
+	<link href="css/960.css" rel="stylesheet" type="text/css"/>
+	<link href='http://fonts.googleapis.com/css?family=Pompiere&v2' rel='stylesheet' type='text/css'>
+	<link href="css/main.css" rel="stylesheet" type="text/css"/>
+	<title>Jenx for Jenkins CI</title>
+</head>
+<body>
+	<img src="images/butler-culpeo-fox.png" style="display:none;" alt="Image to show for Facebook/Google+ status updates" />
+	<div id="system-tray">
+		<div class="container_12">
+			<div class="apple"></div>
+			<div class="title">Jenx</div>
+			<ol>
+				<li class="time">Thu 10:58 PM</li>
+				<li class="battery"></li>
+				<li class="wifi"></li>
+				<li class="urban-coding"><a href="http://www.urbancoding.net"></a></li>
+				<li class="jenx">
+					<a href="#"></a>
+					<div class="jenx-dropdown" style="display:none;">
+						<img src="images/peekshow.gif" />
+					</div>
+				</li>
+			</ol>
+		</div>
+	</div>
+	
+	<div class="header container_12">
+		<div class="content">
+			<div class="what-you-are-missing"></div>
+			<h1>Say Hello to Jenx</h1>
+			<p>
+				Monitor your Jenkins continuous integration server build statuses with 
+				real-time notifications and a handy overview just a click away.
+			</p>
+			<ul>
+				<li class="jenkins"><a href="http://jenkins-ci.org/" alt="Jenkins-CI">Jenkins 1.1+</a></li>
+				<li class="macruby"><a href="http://www.macruby.org/" alt="MacRuby">MacRuby 0.1+</a></li>
+				<li class="osx"><a href="http://www.apple.com" alt="OSX">OSX 10.6+</a></li>
+			</ul>
+			<div class="btn">
+				<a class="download" href="http://urbancoding.github.com/jenx/versions/beta1/Jenx.dmg">Download Now</a>
+			</div>
+			<div class="version">Alpha Release</div>
+		</div>
+	</div>
+	
+	<div class="details">
+	<div class="details-inner">
+		<div class="container_12">
+			<div class="detail grid_4 alpha">
+				<h2>Build Summary</h2>
+				<div class="snapshot snapshot-summary"></div>
+			</div>
+			<div class="detail grid_4">
+				<h2>One-Step Setup</h2>
+				<div class="snapshot snapshot-setup"></div>
+			</div>
+			<div class="detail grid_4 omega">
+				<h2>Instant Notifications</h2>
+				<div class="snapshot snapshot-notified"></div>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="footer container_12">
+		<div class="grid_6 alpha">Proudly Built by <a href="http://www.urbancoding.net">Urban Coding</a> in Birmingham, Alabama, USA.</div>
+		<div class="grid_6 omega">Artwork by <a href="http://culpeo-fox.deviantart.com/">Culpeo Fox</a></div>
+	</div>
+	
+	<div id="fork-me">
+		
+	</div>
+	<a href="http://github.com/urbancoding/jenx"><img style="position: absolute; top: 22px; left: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/5d21241b64dc708fcbb701f68f72f41e9f1fadd6/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
+	
+	<script type="text/javascript">
+		/* NO CACHE FOR YOU!!!  */
+		
+		$(".jenx a").click(function(){
+			$(".jenx-dropdown").toggle();
+			$(this).parent().toggleClass("selected");
+		});
+		
+		//time
+		var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		function setTime() {
+			var d = new Date(),
+				minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes(),
+				timeOfDay = d.getHours() > 12 ? "PM" : "AM",
+				hours = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
+				day = days[d.getDay()];
+				
+			if (0 === hours) { hours = 12; }
+			
+			$(".time").html(day + " " + hours + ":" + minutes + " " + timeOfDay);
+		}
+		setTime();
+		setInterval(setTime, 60000);
+	</script>
+
+</body>
+</html>
