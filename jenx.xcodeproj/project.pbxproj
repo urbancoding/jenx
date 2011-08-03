@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; };
+		0E58D2C913E7FFBD00707AE4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */; };
+		0E58D2CA13E7FFC800707AE4 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */; };
+		0E58D2CC13E8002B00707AE4 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E58D2CB13E8002B00707AE4 /* Growl.framework */; };
+		0E58D2CD13E8003100707AE4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E58D2CB13E8002B00707AE4 /* Growl.framework */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
 		96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B7013CBE2610028D5A8 /* jenx_success.tiff */; };
 		9654D82013CAD9AD00FC2602 /* jenx.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9654D81F13CAD9AD00FC2602 /* jenx.icns */; };
-		96801662138A3BB800050ED2 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9680166F138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */; };
 		96801689138B26F500050ED2 /* JenxConnectionManager.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96801688138B26F500050ED2 /* JenxConnectionManager.rb */; };
 		9680168C138B6A2800050ED2 /* JenxConnection.rb in Resources */ = {isa = PBXBuildFile; fileRef = 9680168B138B6A2800050ED2 /* JenxConnection.rb */; };
@@ -46,18 +48,20 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */,
+				0E58D2CA13E7FFC800707AE4 /* Sparkle.framework in CopyFiles */,
+				0E58D2CD13E8003100707AE4 /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		0E58D2CB13E8002B00707AE4 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = frameworks/Growl.framework; sourceTree = "<group>"; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
 		9654D81F13CAD9AD00FC2602 /* jenx.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = jenx.icns; path = images/jenx.icns; sourceTree = "<group>"; };
-		96801661138A3BB800050ED2 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Library/Frameworks/Growl.framework; sourceTree = SDKROOT; };
 		9680166E138A3CDA00050ED2 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		96801688138B26F500050ED2 /* JenxConnectionManager.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConnectionManager.rb; sourceTree = "<group>"; };
 		9680168B138B6A2800050ED2 /* JenxConnection.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConnection.rb; sourceTree = "<group>"; };
@@ -92,9 +96,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96801662138A3BB800050ED2 /* Growl.framework in Frameworks */,
 				96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */,
 				96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */,
+				0E58D2C913E7FFBD00707AE4 /* Sparkle.framework in Frameworks */,
+				0E58D2CC13E8002B00707AE4 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +162,8 @@
 		96CCF18213838DD50010CC22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96801661138A3BB800050ED2 /* Growl.framework */,
+				0E58D2CB13E8002B00707AE4 /* Growl.framework */,
+				0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */,
 				96CCF18313838DD50010CC22 /* Cocoa.framework */,
 				96CCF18513838DD50010CC22 /* MacRuby.framework */,
 			);
@@ -224,11 +230,11 @@
 /* Begin PBXLegacyTarget section */
 		96CCF18713838DD50010CC22 /* Deployment */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "--compile --embed --gem open-uri";
+			buildArgumentsString = "--compile --embed";
 			buildConfigurationList = 96CCF19F13838DD50010CC22 /* Build configuration list for PBXLegacyTarget "Deployment" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/local/bin/macruby_deploy;
+			buildToolPath = /Library/Frameworks/MacRuby.framework/Versions/Current/usr/bin/macruby_deploy;
 			buildWorkingDirectory = "";
 			dependencies = (
 			);
@@ -389,6 +395,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = required;
@@ -408,6 +418,10 @@
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/frameworks\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
