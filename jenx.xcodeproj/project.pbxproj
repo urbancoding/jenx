@@ -224,11 +224,11 @@
 /* Begin PBXLegacyTarget section */
 		96CCF18713838DD50010CC22 /* Deployment */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "--compile --embed --gem open-uri";
+			buildArgumentsString = "--compile --embed";
 			buildConfigurationList = 96CCF19F13838DD50010CC22 /* Build configuration list for PBXLegacyTarget "Deployment" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/local/bin/macruby_deploy;
+			buildToolPath = /Library/Frameworks/MacRuby.framework/Versions/Current/usr/bin/macruby_deploy;
 			buildWorkingDirectory = "";
 			dependencies = (
 			);
