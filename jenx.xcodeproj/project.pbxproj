@@ -11,6 +11,7 @@
 		0E58D2CA13E7FFC800707AE4 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */; };
 		0E58D2CC13E8002B00707AE4 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E58D2CB13E8002B00707AE4 /* Growl.framework */; };
 		0E58D2CD13E8003100707AE4 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0E58D2CB13E8002B00707AE4 /* Growl.framework */; };
+		0E878D2613EB458300D00079 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0E878D2513EB458300D00079 /* dsa_pub.pem */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
 		96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B7013CBE2610028D5A8 /* jenx_success.tiff */; };
@@ -41,6 +42,23 @@
 		96FB0083138642C4001EB442 /* JenxPreferences.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96FB0082138642C4001EB442 /* JenxPreferences.rb */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0E878D3313EB47C900D00079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96CCF17613838DD50010CC22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96CCF18713838DD50010CC22;
+			remoteInfo = Deployment;
+		};
+		0E878D3513EB47D200D00079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96CCF17613838DD50010CC22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96CCF17E13838DD50010CC22;
+			remoteInfo = jenx;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		9642B29F13CF4F3C00B50334 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -58,6 +76,7 @@
 /* Begin PBXFileReference section */
 		0E58D2C813E7FFBD00707AE4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		0E58D2CB13E8002B00707AE4 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = frameworks/Growl.framework; sourceTree = "<group>"; };
+		0E878D2513EB458300D00079 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
@@ -187,6 +206,7 @@
 		96CCF18913838DD50010CC22 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E878D2513EB458300D00079 /* dsa_pub.pem */,
 				96CCF18A13838DD50010CC22 /* jenx-Info.plist */,
 				96CCF18B13838DD50010CC22 /* InfoPlist.strings */,
 				96CCF18E13838DD50010CC22 /* jenx-Prefix.pch */,
@@ -228,6 +248,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
+		0E878D2B13EB474E00D00079 /* Appcast */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = appcast_automation.rb;
+			buildConfigurationList = 0E878D2C13EB474E00D00079 /* Build configuration list for PBXLegacyTarget "Appcast" */;
+			buildPhases = (
+			);
+			buildToolPath = /Library/Frameworks/MacRuby.framework/Versions/Current/usr/bin/macruby;
+			buildWorkingDirectory = "";
+			dependencies = (
+				0E878D3413EB47C900D00079 /* PBXTargetDependency */,
+			);
+			name = Appcast;
+			passBuildSettingsInEnvironment = 1;
+			productName = Appcast;
+		};
 		96CCF18713838DD50010CC22 /* Deployment */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "--compile --embed";
@@ -237,6 +272,7 @@
 			buildToolPath = /Library/Frameworks/MacRuby.framework/Versions/Current/usr/bin/macruby_deploy;
 			buildWorkingDirectory = "";
 			dependencies = (
+				0E878D3613EB47D200D00079 /* PBXTargetDependency */,
 			);
 			name = Deployment;
 			passBuildSettingsInEnvironment = 1;
@@ -285,6 +321,7 @@
 			targets = (
 				96CCF17E13838DD50010CC22 /* jenx */,
 				96CCF18713838DD50010CC22 /* Deployment */,
+				0E878D2B13EB474E00D00079 /* Appcast */,
 			);
 		};
 /* End PBXProject section */
@@ -319,6 +356,7 @@
 				96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */,
 				96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */,
 				9683417013CE969E003667B5 /* jenx_issues.tiff in Resources */,
+				0E878D2613EB458300D00079 /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +372,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0E878D3413EB47C900D00079 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96CCF18713838DD50010CC22 /* Deployment */;
+			targetProxy = 0E878D3313EB47C900D00079 /* PBXContainerItemProxy */;
+		};
+		0E878D3613EB47D200D00079 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96CCF17E13838DD50010CC22 /* jenx */;
+			targetProxy = 0E878D3513EB47D200D00079 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		96CCF18B13838DD50010CC22 /* InfoPlist.strings */ = {
@@ -355,6 +406,35 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0E878D2D13EB474E00D00079 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0E878D2E13EB474E00D00079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		96CCF19A13838DD50010CC22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -448,6 +528,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0E878D2C13EB474E00D00079 /* Build configuration list for PBXLegacyTarget "Appcast" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E878D2D13EB474E00D00079 /* Debug */,
+				0E878D2E13EB474E00D00079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

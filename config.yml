@@ -1,0 +1,5 @@
+build_now: 'YES'
+download_base_url: 'http://urbancoding.github.com/jenx/'
+appcast_basefolder: 'appcast'
+appcast_xml_name: 'appcast.xml'
+keychain_privkey_name: 'Jenx Private Key'
