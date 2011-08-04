@@ -10,7 +10,7 @@ class JenxPreferences
     attr_accessor :projects
     
     def self.sharedInstance
-        @instance ||= self.alloc.init
+        self.alloc.init
     end
 
     def init
@@ -80,10 +80,6 @@ class JenxPreferences
         JenxStartup.alloc.init.set(val)
     end
 
-    def are_invalid?
-        build_server_url.nil? || default_project.nil? || refresh_time.nil? || num_menu_projects.nil?
-    end
-
     def username
         NSUserDefaults.standardUserDefaults.stringForKey(PREFERENCES_BUILD_SERVER_USERNAME)
     end
@@ -102,6 +98,9 @@ class JenxPreferences
         NSUserDefaults.standardUserDefaults.synchronize
     end
 
+    def are_invalid?
+        build_server_url.nil? || default_project.nil? || refresh_time.nil? || num_menu_projects.nil?
+    end
 
     class << self
         def setup_defaults

@@ -77,7 +77,7 @@ class PreferencesGeneralViewController <  NSViewController
         @prefs.password = @password.stringValue
         @prefs.default_project = @project_list.objectValueOfSelectedItem
         @prefs.refresh_time = @refresh_time.intValue
-        @prefs.num_menu_projects = @num_menu_projects.intValue
+        @prefs.num_menu_projects = (@num_menu_projects.intValue > @project_list.numberOfItems) ? @project_list.numberOfItems : @num_menu_projects.intValue
         @prefs.enable_growl = (@enable_growl.state == NSOnState)
         @prefs.launch_at_login = (@launch_at_login.state == NSOnState)
         
