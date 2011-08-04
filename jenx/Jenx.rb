@@ -31,13 +31,15 @@ class Jenx
     def applicationDidFinishLaunching(notification)
         @initial_load = true
         @editing_preferences = false
-        @prefs = JenxPreferences.sharedInstance
-        @project_menu_count = @prefs.num_menu_projects == 0 ? @prefs.total_num_projects : @prefs.num_menu_projects
-        @growl_center = JenxNotificationCenter.new(@prefs)
+        
         init_jenx
     end
     
     def init_jenx(sender=nil)
+        @prefs = JenxPreferences.sharedInstance
+        @project_menu_count = @prefs.num_menu_projects
+        @growl_center = JenxNotificationCenter.new(@prefs)
+        
         if @prefs.are_invalid?
             NSLog("showing preferences because invalid")
             show_preferences_window(nil)
@@ -56,8 +58,8 @@ class Jenx
     
     def fetch_current_build_status
         @old_default_build_status = @new_default_build_status
-        @all_projects =  JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).all_projects
-        NSLog("fetching current build status for #{@prefs.total_num_projects} projects...")
+        @all_projects = JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).all_projects
+        NSLog("fetching current build status for #{@prefs.num_menu_projects} projects...")
         
         default_project_status_color = ''
         @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
