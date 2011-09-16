@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04E861051423BE62006DA573 /* PreferencesGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E861071423BE62006DA573 /* PreferencesGeneralView.xib */; };
+		04E861181423DE92006DA573 /* JenxLocalize.rb in Resources */ = {isa = PBXBuildFile; fileRef = 04E861171423DE92006DA573 /* JenxLocalize.rb */; };
 		9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
@@ -56,6 +57,7 @@
 		04E861041423BDF1006DA573 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/Jenx.xib; sourceTree = "<group>"; };
 		04E861061423BE62006DA573 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferencesGeneralView.xib; sourceTree = "<group>"; };
 		04E861081423C128006DA573 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/PreferencesGeneralView.xib; sourceTree = "<group>"; };
+		04E861171423DE92006DA573 /* JenxLocalize.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxLocalize.rb; sourceTree = "<group>"; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		96FB008013864264001EB442 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				04E861171423DE92006DA573 /* JenxLocalize.rb */,
 				96B6FD0713862428009C1021 /* JenxConstants.rb */,
 				96FB0082138642C4001EB442 /* JenxPreferences.rb */,
 				9680168B138B6A2800050ED2 /* JenxConnection.rb */,
@@ -316,6 +319,7 @@
 				96512B7213CBE2610028D5A8 /* jenx_success.tiff in Resources */,
 				96F678DD13CE753D003BFD59 /* JenxStartup.rb in Resources */,
 				9683417013CE969E003667B5 /* jenx_issues.tiff in Resources */,
+				04E861181423DE92006DA573 /* JenxLocalize.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
