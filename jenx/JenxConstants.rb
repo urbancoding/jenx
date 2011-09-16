@@ -31,13 +31,13 @@ NOTIFICATION_PREFERENCES_UPDATED = "preferences_updated"
 #errors
 ERROR_NO_INTERNET_CONNECTION = "no_internet_connection"
 ERROR_SERVER_CANNOT_BE_CONTACTED = "server cannot be contacted"
-CONNECTION_ERROR_TITLE = "Connection Error"
-CONNECTION_ERROR_MESSAGE = "Cannot connect to build server."
-CANNOT_CONNECT = "Jenx Status: Not Connected"
-CONNECTED = "Jenx Status: Connected"
+CONNECTION_ERROR_TITLE = localize("Connection Error", "Connection Error")
+CONNECTION_ERROR_MESSAGE = localize("Cannot connect to build server.", "Cannot connect to build server.")
+CANNOT_CONNECT = localize("Jenx Status: Not Connected", "Jenx Status: Not Connected")
+CONNECTED = localize("Jenx Status: Connected","Jenx Status: Connected")
 
 #growl notification types
-CONNECTION_FAILURE = "Connection Failure"
-BUILD_FAILURE = "Build Failure"
-BUILD_SUCCESS = "Build Success"
-BUILD_ISSUES = "Build has Issues" 
+CONNECTION_FAILURE = localize("Connection Failure", "Connection Failure")
+BUILD_FAILURE = localize("Build Failure", "Build Failure")
+BUILD_SUCCESS = localize("Build Success", "Build Success")
+BUILD_ISSUES = localize("Build has Issues","Build has Issues") 

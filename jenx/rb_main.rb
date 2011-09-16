@@ -17,10 +17,17 @@ require 'timeout'
 require 'net/https'
 require 'open-uri'
 
+# Localize must be loaded in first position
+require 'JenxLocalize'
+
 # Loading all the Ruby project files.
 main = File.basename(__FILE__, File.extname(__FILE__))
 dir_path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation
 Dir.glob(File.join(dir_path, '*.{rb,rbo}')).map { |x| File.basename(x, File.extname(x)) }.uniq.each do |path|
+  # JenxLocalize is already, so we skip it
+  if path == 'JenxLocalize'
+		next
+  end
   if path != main
     require(path)
   end
