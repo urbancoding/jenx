@@ -229,7 +229,6 @@
 						<string key="NSFrame">{{360, 18}, {99, 25}}</string>
 						<reference key="NSSuperview" ref="1027676433"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="819501405">
@@ -396,7 +395,7 @@
 					<object class="NSBox" id="1032114255">
 						<reference key="NSNextResponder" ref="1027676433"/>
 						<int key="NSvFlags">12</int>
-						<string key="NSFrame">{{12, 173}, {419, 5}}</string>
+						<string key="NSFrame">{{12, 173}, {447, 5}}</string>
 						<reference key="NSSuperview" ref="1027676433"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="358402847"/>
@@ -421,7 +420,7 @@
 					<object class="NSComboBox" id="510035087">
 						<reference key="NSNextResponder" ref="1027676433"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{133, 188}, {293, 26}}</string>
+						<string key="NSFrame">{{133, 188}, {329, 26}}</string>
 						<reference key="NSSuperview" ref="1027676433"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1032114255"/>
