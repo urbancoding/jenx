@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04E861051423BE62006DA573 /* PreferencesGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E861071423BE62006DA573 /* PreferencesGeneralView.xib */; };
 		9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
@@ -22,7 +23,6 @@
 		96803B8E1384CB4000D5DD90 /* app.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8C1384CB4000D5DD90 /* app.tiff */; };
 		96803B8F1384CB4000D5DD90 /* build_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96803B8D1384CB4000D5DD90 /* build_failure.tiff */; };
 		9683417013CE969E003667B5 /* jenx_issues.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9683416F13CE969E003667B5 /* jenx_issues.tiff */; };
-		96B6FD0113860BB8009C1021 /* PreferencesGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0013860BB8009C1021 /* PreferencesGeneralView.xib */; };
 		96B6FD0413860F95009C1021 /* PreferencesGeneralViewController.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0313860F95009C1021 /* PreferencesGeneralViewController.rb */; };
 		96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0513861B97009C1021 /* PreferencesController.rb */; };
 		96B6FD0813862428009C1021 /* JenxConstants.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0713862428009C1021 /* JenxConstants.rb */; };
@@ -54,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		04E861041423BDF1006DA573 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/Jenx.xib; sourceTree = "<group>"; };
+		04E861061423BE62006DA573 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PreferencesGeneralView.xib; sourceTree = "<group>"; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		96803B8C1384CB4000D5DD90 /* app.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = app.tiff; path = images/app.tiff; sourceTree = "<group>"; };
 		96803B8D1384CB4000D5DD90 /* build_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = build_failure.tiff; path = images/build_failure.tiff; sourceTree = "<group>"; };
 		9683416F13CE969E003667B5 /* jenx_issues.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_issues.tiff; path = images/jenx_issues.tiff; sourceTree = "<group>"; };
-		96B6FD0013860BB8009C1021 /* PreferencesGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesGeneralView.xib; sourceTree = "<group>"; };
 		96B6FD0313860F95009C1021 /* PreferencesGeneralViewController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreferencesGeneralViewController.rb; sourceTree = "<group>"; };
 		96B6FD0513861B97009C1021 /* PreferencesController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = PreferencesController.rb; sourceTree = "<group>"; };
 		96B6FD0713862428009C1021 /* JenxConstants.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConstants.rb; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				96CCF19213838DD50010CC22 /* Jenx.xib */,
-				96B6FD0013860BB8009C1021 /* PreferencesGeneralView.xib */,
+				04E861071423BE62006DA573 /* PreferencesGeneralView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -300,7 +300,7 @@
 				96803B8E1384CB4000D5DD90 /* app.tiff in Resources */,
 				96803B8F1384CB4000D5DD90 /* build_failure.tiff in Resources */,
 				96EF2B9E1384E2E8002A755A /* build_success.tiff in Resources */,
-				96B6FD0113860BB8009C1021 /* PreferencesGeneralView.xib in Resources */,
+				04E861051423BE62006DA573 /* PreferencesGeneralView.xib in Resources */,
 				96B6FD0413860F95009C1021 /* PreferencesGeneralViewController.rb in Resources */,
 				96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */,
 				96B6FD0813862428009C1021 /* JenxConstants.rb in Resources */,
@@ -332,6 +332,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		04E861071423BE62006DA573 /* PreferencesGeneralView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04E861061423BE62006DA573 /* en */,
+			);
+			name = PreferencesGeneralView.xib;
+			sourceTree = "<group>";
+		};
 		96CCF18B13838DD50010CC22 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
