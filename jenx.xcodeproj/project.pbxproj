@@ -53,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04E861041423BDF1006DA573 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = fr; path = fr.lproj/Jenx.xib; sourceTree = "<group>"; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = 96CCF17413838DD50010CC22;
 			productRefGroup = 96CCF18013838DD50010CC22 /* Products */;
@@ -342,6 +344,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				96CCF19313838DD50010CC22 /* en */,
+				04E861041423BDF1006DA573 /* fr */,
 			);
 			name = Jenx.xib;
 			sourceTree = "<group>";
