@@ -1,0 +1,35 @@
+/* 
+ Localizable.strings
+ jenx
+ 
+ Created by Johan BLEUZEN on 16/09/11.
+ Copyright 2011 Urban Coding. All rights reserved.
+ */
+
+"Settings" = "Préférences";
+
+"Connection Error" = "Erreur de connection";
+"Cannot connect to build server." = "Impossible de se connecter à Jenkins.";
+"Jenx Status: Not Connected" = "Status de Jenx: Non Connecté";
+"Jenx Status: Connected" = "Status de Jenx: Connecté";
+
+"Connection Failure" = "Connection Failure";
+"Build has Issues" = "Build has Issues";
+"Build Failure" = "Build Failure";
+"Build Success" = "Build Success";
+
+"Project: ..." = "Projet: ...";
+"Status: ..." = "Status: ...";
+"Last Update: ..." = "Dernière mise à jour : ...";
+
+"Project: %@" = "Projet: %@";
+"Status: %@" = "Status: %@";
+"%I:%M:%S %p" = "%H:%M:%S"; /* This is for date formating */
+"Last Update: %@" = "Dernière mise à jour: %@";
+
+"View all projects.." = "Voir tous les projets..";
+
+"Could not retrieve status" = "Impossible de récupérer le status";
+"Broken" = "Cassé";
+"Stable" = "Stable";
+"Building" = "Build en cours";

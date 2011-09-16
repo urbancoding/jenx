@@ -20,7 +20,7 @@ class PreferencesGeneralViewController <  NSViewController
     attr_accessor :launch_at_login
     
     def title
-        "Settings"
+        localize("Settings", "Settings")
     end
     
     def image

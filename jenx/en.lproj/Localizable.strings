@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  jenx
+
+  Created by Johan BLEUZEN on 16/09/11.
+  Copyright 2011 Urban Coding. All rights reserved.
+*/
+
+"Settings" = "Settings";
+
+"Connection Error" = "Connection Error";
+"Cannot connect to build server." = "Cannot connect to build server.";
+"Jenx Status: Not Connected" = "Jenx Status: Not Connected";
+"Jenx Status: Connected" = "Jenx Status: Connected";
+
+"Connection Failure" = "Connection Failure";
+"Build has Issues" = "Build has Issues";
+"Build Failure" = "Build Failure";
+"Build Success" = "Build Success";
+
+"Project: ..." = "Project: ...";
+"Status: ..." = "Status: ...";
+"Last Update: ..." = "Last Update: ...";
+
+"Project: %@" = "Project: %@";
+"Status: %@" = "Status: %@";
+"%I:%M:%S %p" = "%I:%M:%S %p"; /* This is for date formating */
+"Last Update: %@" = "Last Update: %@";
+
+"View all projects.." = "View all projects..";
+
+"Could not retrieve status" = "Could not retrieve status";
+"Broken" = "Broken";
+"Stable" = "Stable";
+"Building" = "Building";

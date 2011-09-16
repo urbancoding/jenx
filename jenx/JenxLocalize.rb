@@ -11,8 +11,8 @@ def localize(key, default_value = "")
 end
 
 #varargs don't work yet
-def localize_format(key, translation_table = nil, placeholder_value)
-    format_str = localized(key, translation_table)
+def localize_format(key, placeholder_value)
+    format_str = localize(key, nil)
     puts format_str
     NSString.stringWithFormat(format_str, placeholder_value)
 end

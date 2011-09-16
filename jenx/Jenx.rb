@@ -68,9 +68,10 @@ class Jenx
         jenx_status_item = @jenx_item.menu.itemAtIndex(0)
         jenx_status_item.setTitle(CONNECTED)
         
-        @menu_default_project.setTitle("Project: #{@prefs.default_project}")
-        @menu_default_project_status.setTitle("Status: #{@new_default_build_status}")
-        @menu_default_project_update_time.setTitle(Time.now.strftime("Last Update: %I:%M:%S %p"))
+	      @menu_default_project.setTitle(localize_format("Project: %@", "#{@prefs.default_project}"))
+        @menu_default_project_status.setTitle(localize_format("Status: %@", "#{@new_default_build_status}"))
+      	date = Time.now.strftime(localize("%I:%M:%S %p", "%I:%M:%S %p"))
+        @menu_default_project_update_time.setTitle(localize_format("Last Update: %@", date))
         
         @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
 
@@ -187,9 +188,9 @@ class Jenx
         jenx_status_item = @jenx_item.menu.itemAtIndex(0)
         jenx_status_item.setTitle(CONNECTED)
         
-        @menu_default_project.setTitle("Project: ...")
-        @menu_default_project_status.setTitle("Status: ...")
-        @menu_default_project_update_time.setTitle("Last Update: ...")
+        @menu_default_project.setTitle(localize("Project: ..."))
+        @menu_default_project_status.setTitle(localize("Status: ..."))
+        @menu_default_project_update_time.setTitle(localize("Last Update: ..."))
     end
 
     def register_observers
@@ -225,13 +226,13 @@ class Jenx
         
         case color.to_sym
             when ""
-                "Could not retrieve status"
+                localize("Could not retrieve status")
             when :red
-                "Broken"
+                localize("Broken")
             when :blue_anime
-                "Building"
+                localize("Building")
             else
-                "Stable"
+                localize("Stable")
         end
     end
     
@@ -278,7 +279,7 @@ class Jenx
 
     def view_all_menu_item(project_menu_count)
         view_all_menu_item = NSMenuItem.alloc.init
-        view_all_menu_item.setTitle("View all projects..")
+        view_all_menu_item.setTitle(localize("View all projects.."))
         view_all_menu_item.setToolTip(@prefs.build_server_url)
         view_all_menu_item.setIndentationLevel(1)
         view_all_menu_item.setAction("open_web_interface_for:")
