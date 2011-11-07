@@ -10,6 +10,7 @@
 		04E861051423BE62006DA573 /* PreferencesGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E861071423BE62006DA573 /* PreferencesGeneralView.xib */; };
 		04E861181423DE92006DA573 /* JenxLocalize.rb in Resources */ = {isa = PBXBuildFile; fileRef = 04E861171423DE92006DA573 /* JenxLocalize.rb */; };
 		04E8611C1423E2E8006DA573 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E8611E1423E2E8006DA573 /* Localizable.strings */; };
+		962C55B9146766DD007994E9 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 962C55B8146766DD007994E9 /* MacRuby.framework */; };
 		9642B2A013CF4F9200B50334 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96801661138A3BB800050ED2 /* Growl.framework */; };
 		96512B6D13CBD75A0028D5A8 /* JenxNotificationCenter.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */; };
 		96512B7113CBE2610028D5A8 /* jenx_failure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */; };
@@ -29,7 +30,6 @@
 		96B6FD0613861B97009C1021 /* PreferencesController.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0513861B97009C1021 /* PreferencesController.rb */; };
 		96B6FD0813862428009C1021 /* JenxConstants.rb in Resources */ = {isa = PBXBuildFile; fileRef = 96B6FD0713862428009C1021 /* JenxConstants.rb */; };
 		96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18313838DD50010CC22 /* Cocoa.framework */; };
-		96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96CCF18513838DD50010CC22 /* MacRuby.framework */; };
 		96CCF18D13838DD50010CC22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF18B13838DD50010CC22 /* InfoPlist.strings */; };
 		96CCF19013838DD50010CC22 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CCF18F13838DD50010CC22 /* main.m */; };
 		96CCF19413838DD50010CC22 /* Jenx.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96CCF19213838DD50010CC22 /* Jenx.xib */; };
@@ -61,6 +61,7 @@
 		04E861171423DE92006DA573 /* JenxLocalize.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxLocalize.rb; sourceTree = "<group>"; };
 		04E8611D1423E2E8006DA573 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04E8611F1423FD2D006DA573 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		962C55B8146766DD007994E9 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = Library/Frameworks/MacRuby.framework; sourceTree = SDKROOT; };
 		96512B6C13CBD75A0028D5A8 /* JenxNotificationCenter.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxNotificationCenter.rb; sourceTree = "<group>"; };
 		96512B6F13CBE2610028D5A8 /* jenx_failure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_failure.tiff; path = images/jenx_failure.tiff; sourceTree = "<group>"; };
 		96512B7013CBE2610028D5A8 /* jenx_success.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = jenx_success.tiff; path = images/jenx_success.tiff; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		96B6FD0713862428009C1021 /* JenxConstants.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = JenxConstants.rb; sourceTree = "<group>"; };
 		96CCF17F13838DD50010CC22 /* jenx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jenx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CCF18313838DD50010CC22 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		96CCF18513838DD50010CC22 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = System/Library/Frameworks/MacRuby.framework; sourceTree = SDKROOT; };
 		96CCF18A13838DD50010CC22 /* jenx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jenx-Info.plist"; sourceTree = "<group>"; };
 		96CCF18C13838DD50010CC22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		96CCF18E13838DD50010CC22 /* jenx-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jenx-Prefix.pch"; sourceTree = "<group>"; };
@@ -99,9 +99,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				962C55B9146766DD007994E9 /* MacRuby.framework in Frameworks */,
 				96801662138A3BB800050ED2 /* Growl.framework in Frameworks */,
 				96CCF18413838DD50010CC22 /* Cocoa.framework in Frameworks */,
-				96CCF18613838DD50010CC22 /* MacRuby.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,9 +164,9 @@
 		96CCF18213838DD50010CC22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96801661138A3BB800050ED2 /* Growl.framework */,
 				96CCF18313838DD50010CC22 /* Cocoa.framework */,
-				96CCF18513838DD50010CC22 /* MacRuby.framework */,
+				96801661138A3BB800050ED2 /* Growl.framework */,
+				962C55B8146766DD007994E9 /* MacRuby.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -272,9 +272,10 @@
 		96CCF17613838DD50010CC22 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Urban Coding";
 			};
-			buildConfigurationList = 96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */;
+			buildConfigurationList = 96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "Jenx" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -465,7 +466,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */ = {
+		96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "Jenx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96CCF19A13838DD50010CC22 /* Debug */,
