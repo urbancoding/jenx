@@ -272,9 +272,10 @@
 		96CCF17613838DD50010CC22 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Urban Coding";
 			};
-			buildConfigurationList = 96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */;
+			buildConfigurationList = 96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "Jenx" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -465,7 +466,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "jenx" */ = {
+		96CCF17913838DD50010CC22 /* Build configuration list for PBXProject "Jenx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96CCF19A13838DD50010CC22 /* Debug */,
