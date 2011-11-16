@@ -30,7 +30,7 @@ class JenxConnection
             uri = URI.parse(@url)
             http = Net::HTTP.new(uri.host, uri.port)
             initSSL(http, uri.scheme)
-            req = Net::HTTP::Get.new(JENX_API_URI)
+            req = Net::HTTP::Get.new(uri.request_uri + JENX_API_URI)
             auth(req)
             response = http.request(req)
             if response.code_type == Net::HTTPOK then
@@ -46,7 +46,7 @@ class JenxConnection
             uri = URI.parse(@url)
             http = Net::HTTP.new(uri.host, uri.port)
             initSSL(http, uri.scheme)
-            req = Net::HTTP::Head.new(JENX_API_URI)
+            req = Net::HTTP::Head.new(uri.request_uri + JENX_API_URI)
             auth(req)
             response = http.request(req)
             response.code_type == Net::HTTPOK
