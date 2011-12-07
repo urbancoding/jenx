@@ -26,8 +26,14 @@ class JenxConnection
     end
 
     def all_projects
+        uri = URI.parse(@url)
+        
+        if !uri.respond_to?(:request_uri) then
+            NSLog("Failed to load list of projects from @url = \"#{@url}\"")
+            return {'jobs' => []}
+        end
+        
         connection_result = JenxConnectionManager.new do
-            uri = URI.parse(@url)
             http = Net::HTTP.new(uri.host, uri.port)
             initSSL(http, uri.scheme)
             req = Net::HTTP::Get.new(uri.request_uri + JENX_API_URI)
