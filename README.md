@@ -1,6 +1,6 @@
 # [Jenx](http://urbancoding.github.com/jenx/) #
 
-A Jenkins build server monitor for Mac OS X, powered by MacRuby. This app sits in your status bar and reports the status of all your Jenkins builds. Click on a job, and it opens it up in your browser. It even supports Growl! 
+A [Jenkins](http://jenkins-ci.org/) build server monitor for Mac OS X, powered by [MacRuby](http://macruby.com/). This app sits in your status bar and reports the status of all your Jenkins builds. Click on a job, and it opens it up in your browser. It even supports Growl! 
 
 Requirements
 ------------
