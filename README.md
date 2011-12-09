@@ -4,6 +4,11 @@ A [Jenkins](http://jenkins-ci.org/) build server monitor for Mac OS X, powered b
 This app sits in your status bar and reports the status of all your Jenkins builds.
 Click on a job, and it opens it up in your browser. It even supports [Growl](http://growl.info/)! 
 
+Screenshot
+------------
+
+![Screenshot](http://f.cl.ly/items/0n1N0n2E1m1l2y0G0y1C/Screen%20shot%202011-12-09%20at%208.45.32%20AM.png)
+
 Requirements
 ------------
 
