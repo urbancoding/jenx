@@ -64,9 +64,9 @@ class PreferencesGeneralViewController <  NSViewController
                 @project_list.selectItemWithObjectValue(@prefs.default_project)
             end
         rescue URI::InvalidURIError => uri_error
-            NSLog(uri_error)
+            NSLog(uri_error.inspect)
         rescue Exception => error
-            NSLog(error)
+            NSLog(error.inspect)
         end
     end
     
