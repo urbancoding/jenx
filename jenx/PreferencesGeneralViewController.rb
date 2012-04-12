@@ -53,15 +53,17 @@ class PreferencesGeneralViewController <  NSViewController
         @project_list.removeAllItems
         begin
             url = @server_url.stringValue[-1,1].eql?('/') ? @server_url.stringValue : @server_url.stringValue + '/'
-            @all_projects =  JenxConnection.new(url, @username.stringValue, @password.stringValue).all_projects
-            @all_projects['jobs'].each do |project|
-                @project_list.addItemWithObjectValue(project['name'])
-            end
-            
-            if !@prefs.default_project
-                @project_list.selectItemWithObjectValue(0)
-            else
-                @project_list.selectItemWithObjectValue(@prefs.default_project)
+            JenxConnection.new(url, @username.stringValue, @password.stringValue).all_projects do |all_projects|
+                @all_projects = all_projects
+                @all_projects['jobs'].each do |project|
+                    @project_list.addItemWithObjectValue(project['name'])
+                end
+                
+                if !@prefs.default_project
+                    @project_list.selectItemWithObjectValue(0)
+                    else
+                    @project_list.selectItemWithObjectValue(@prefs.default_project)
+                end
             end
         rescue URI::InvalidURIError => uri_error
             NSLog(uri_error.inspect)

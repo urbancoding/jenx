@@ -25,7 +25,7 @@ class JenxConnection
         end
     end
 
-    def all_projects
+    def all_projects(&block)
         uri = URI.parse(@url)
         
         if !uri.respond_to?(:request_uri) then
@@ -34,6 +34,7 @@ class JenxConnection
         end
         
         connection_result = JenxConnectionManager.new do
+            all_projects = nil
             http = Net::HTTP.new(uri.host, uri.port)
             initSSL(http, uri.scheme)
             req = Net::HTTP::Get.new(uri.request_uri + JENX_API_URI)
@@ -41,13 +42,16 @@ class JenxConnection
             response = http.request(req)
             if response.code_type == Net::HTTPOK then
                 result = response.body
-                JSON.parse(result)
+                all_projects = JSON.parse(result)
+            end
+            Dispatch::Queue.main.async do
+                block.call(all_projects)
             end
         end
-        connection_result.value
+        ## This blocks: connection_result.value
     end
 
-    def is_connected?
+    def is_connected?(&block)
         connection_result = JenxConnectionManager.new do
             uri = URI.parse(@url)
             http = Net::HTTP.new(uri.host, uri.port)
@@ -55,8 +59,10 @@ class JenxConnection
             req = Net::HTTP::Head.new(uri.request_uri + JENX_API_URI)
             auth(req)
             response = http.request(req)
-            response.code_type == Net::HTTPOK
+            Dispatch::Queue.main.async do
+                block.call(response.code_type == Net::HTTPOK)
+            end
         end
-        connection_result.value
+        ## This blocks: connection_result.value
     end
 end

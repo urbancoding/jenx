@@ -53,29 +53,35 @@ class Jenx
         if @refresh_timer.nil? || !@refresh_timer.isValid
             create_timer
         end
-        JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).is_connected? ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
+        JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).is_connected? do |is_connected|
+            is_connected ? fetch_current_build_status : handle_broken_connection(ERROR_SERVER_CANNOT_BE_CONTACTED)
+        end
     end
     
     def fetch_current_build_status
         @old_default_build_status = @new_default_build_status
-        @all_projects = JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).all_projects
-        NSLog("fetching current build status for #{@prefs.num_menu_projects} projects...")
-        
-        default_project_status_color = ''
-        @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
-        @new_default_build_status = get_current_status_for(default_project_status_color)
-        
-        jenx_status_item = @jenx_item.menu.itemAtIndex(0)
-        jenx_status_item.setTitle(CONNECTED)
-        
-	      @menu_default_project.setTitle(localize_format("Project: %@", "#{@prefs.default_project}"))
-        @menu_default_project_status.setTitle(localize_format("Status: %@", "#{@new_default_build_status}"))
-      	date = Time.now.strftime(localize("%I:%M:%S %p", "%I:%M:%S %p"))
-        @menu_default_project_update_time.setTitle(localize_format("Last Update: %@", date))
-        
-        @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
-
-        load_projects
+        JenxConnection.new(@prefs.build_server_url, @prefs.username, @prefs.password).all_projects do |all_projects|
+            @all_projects = all_projects
+            if @all_projects then
+                NSLog("fetching current build status for #{@prefs.num_menu_projects} projects...")
+                
+                default_project_status_color = ''
+                @all_projects['jobs'].find {|p| default_project_status_color = p['color'] if p['name'].downcase.eql?(@prefs.default_project.downcase)}
+                @new_default_build_status = get_current_status_for(default_project_status_color)
+                
+                jenx_status_item = @jenx_item.menu.itemAtIndex(0)
+                jenx_status_item.setTitle(CONNECTED)
+                
+                @menu_default_project.setTitle(localize_format("Project: %@", "#{@prefs.default_project}"))
+                @menu_default_project_status.setTitle(localize_format("Status: %@", "#{@new_default_build_status}"))
+                date = Time.now.strftime(localize("%I:%M:%S %p", "%I:%M:%S %p"))
+                @menu_default_project_update_time.setTitle(localize_format("Last Update: %@", date))
+                
+                @jenx_item.setImage(get_current_status_icon_for(default_project_status_color, nil))
+                
+                load_projects
+            end
+        end
     rescue Exception => e
         NSLog("error fetching build status: #{e.message}...")
     end
