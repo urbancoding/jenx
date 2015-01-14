@@ -1,5 +1,8 @@
 # [Jenx](http://urbancoding.github.com/jenx/) #
 
+Note: Due to Apple’s abandonment of the Objective-C Garbage Collector (libauto) which MacRuby 
+relied heavily on and hence Jenx relied on, future development of Jenx is on an indefinite hiatus.
+
 A [Jenkins](http://jenkins-ci.org/) build server monitor for Mac OS X, powered by [MacRuby](http://macruby.com/).
 This app sits in your status bar and reports the status of all your Jenkins builds.
 Click on a job, and it opens it up in your browser. It even supports [Growl](http://growl.info/)! 
